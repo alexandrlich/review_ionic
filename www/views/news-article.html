@@ -1,0 +1,19 @@
+<ion-view>  
+	<ion-nav-title>
+		 <h1 class="title light">News</h1>
+	</ion-nav-title>			 
+
+
+<ion-content has-bouncing="false" class="ion-content-block  container-fluid has-header has-subheader">
+
+	<div class="page page-news-article">
+		<h1 class="page-title">{{ article.title }}</h1>
+		<div class="news-article-content">
+			<div class="article-date">{{ article.date | date: 'dd MMMM, yyyy'}}</div>
+			<div class="article-content">{{ article.content }}</div>
+		</div>
+	</div>
+
+	
+</ion-content>
+</ion-view>

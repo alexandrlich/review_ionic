@@ -1,0 +1,73 @@
+<ion-view cache-view="false">
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn top-bar-left open-menu">menu</button>
+	</ion-nav-buttons>
+
+	<ion-nav-title>
+		<h1 class="title light">Settings</h1>
+	</ion-nav-title>	
+
+<ion-content class="ion-content-block" has-bouncing="false">
+
+	<div class="page page-settings">
+	<ul class="list">
+		<div class="item item-divider">
+        </div>
+	
+	  <div class="item item-toggle">
+	     In-App Sound
+	     <label class="toggle toggle-positive">
+	       <input type="checkbox" ng-checked="settingsSound" ng-click="changeSoundSetting()">
+	       <div class="track">
+	         <div class="handle"></div>
+	       </div>
+	     </label>
+	  </div>
+
+	  <div class="item item-divider">
+        </div>
+
+	  <div class="item item-toggle">
+	     Add profile to the following list after the leaving a comment
+	     <label class="toggle toggle-positive">
+	       <input type="checkbox" ng-checked="followOnComment" ng-click="changeFollowOnCommentSetting()">
+	       <div class="track">
+	         <div class="handle"></div>
+	       </div>
+	     </label>
+	  </div>
+	  	  
+	  <div class="item item-divider">
+        </div>
+	     
+	     <a class="item item-icon-left item-icon-right" ui-sref="blank.intro">
+          <i class="icon ion-ios-help-empty"></i>
+           See "HOW TO" section again
+          <i class="icon ion-ios-arrow-right"></i>
+        </a>
+        
+        
+        
+        
+	     
+	  <!--	
+		<div class="item item-divider">
+          Email notifications
+        </div>
+		
+	  <li class="item item-toggle">
+	     Notify when profile I created gets approved or rejected:
+	     <label class="toggle toggle-positive">
+	       <input type="checkbox">
+	       <div class="track">
+	         <div class="handle"></div>
+	       </div>
+	     </label>
+	  </li>
+		-->
+		</ul>
+	</div>
+
+</ion-content>
+</ion-view>

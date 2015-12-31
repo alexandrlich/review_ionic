@@ -1,0 +1,71 @@
+<ion-view cache-view="false" hide-back-button="true">
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn top-bar-left open-menu">menu</button>
+	</ion-nav-buttons>
+
+	<ion-nav-title>
+		<h1 class="title light">Notifications</h1>
+	</ion-nav-title>
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false">
+
+	<div class="page page-news">
+		<div  class="text-center"  ng-if="notifications.length==0">
+			You had no notifications recently, all is up to date.
+		</div>
+		<!--
+		<ul class="items-list news-list">
+			<li ng-class="{'news-item': ntfk.ack}" class="rw-item" ng-repeat="ntfk in notifications">
+				<div class="article-title">Profile {{ ntfk.profile_id }} has {{ ntfk.profilesCommentedCount }} new comment(s) </div>
+				<div class="article-date">{{ ntfk.create_time | date: 'dd MMMM, yyyy'}}</div>
+			</li>
+		</ul>
+		-->
+	
+	
+	<!-- profiles-list-->
+	<div class="items-list">			
+	<ion-list show-delete="false" show-reorder="false">
+
+        <ion-item ng-repeat="ntfk in notifications" 
+                  item="ntfk" class="item-remove-animate">
+				
+				
+				<a ng-click="viewProfile(ntfk)">
+					<div ng-class="{'news-item': !ntfk.ack}" class="article-title notification">{{ ntfk.text }}</div>
+					<div class="article-date notification">{{ ntfk.create_time | date: 'dd MMMM, yyyy HH:mm:ss'}}</div>
+				
+				
+				
+				
+
+
+
+				<div class="profile-goto-icon">
+					<i class="icon icon-forward"></i>
+				</div>
+				</a>
+          <ion-option-button class="button-balanced"
+                             ng-click="ack(ntfk)"
+                             ng-if="!ntfk.ack">
+            Mark as read
+          </ion-option-button>
+          <ion-option-button class="button-positive"
+                             ng-click="remove(ntfk)">
+            Delete
+          </ion-option-button>          
+        </ion-item>
+
+      </ion-list>
+ 	</div>     
+	   <ion-infinite-scroll
+	    ng-if="moreDataCanBeLoaded"
+	    on-infinite="loadMore()"
+	    distance="1%">
+	  </ion-infinite-scroll>
+	</div>
+	
+
+</ion-content>
+</ion-view>

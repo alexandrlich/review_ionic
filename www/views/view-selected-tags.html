@@ -1,0 +1,45 @@
+<ion-view  hide-back-button="true" cache-view="false">
+
+	<ion-nav-title>
+		<h1 class="title light">Current Interests</h1>
+	</ion-nav-title>
+
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+
+        <ion-nav-buttons side="right"> 
+          <button  class="button button-light button-clear no-animation" ui-sref="tabs.popular">Popular</button>
+        </ion-nav-buttons>
+
+<ion-content class="ion-content-block" has-bouncing="false">
+	<div class="page page-tag">
+	
+	<div class="rwbar-header">
+	  <p class="title descr-line">All X Interests</p>
+	</div>
+	<div class="container-fluid">
+	
+		
+		<div class="mytagcloud">
+				<span  ng-repeat="tag in selectedTags">
+					<button class="rw-tag rw-subtag button button-small rw-tag-selected ion-minus icon-right " 
+	                  ng-click="removeTag(tag)">{{tag}} </button>
+	    		</span>
+		</div>
+	
+	  
+	   
+		  
+	</div>
+	  <span class="tags-button">
+	   <a class="rw-button rw-button-purple" ui-sref="tabs.addtags" >Add More Interests</a>
+	  </span>  
+	</div>
+	
+	   
+	
+
+</ion-content>
+</ion-view>

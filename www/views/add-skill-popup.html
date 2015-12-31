@@ -1,0 +1,42 @@
+<ion-view cache-view="false" >
+
+	<ion-nav-title>
+		<h1 class="title light">Add Skill</h1>
+	</ion-nav-title>	
+	
+<ion-content class="ion-content-block container-fluid" has-bouncing="false"  scroll="false" ng-controller="AddSkillPopupCtrl">
+	<div class="page page-addskill">
+
+		<div class="list">
+			<div class="item item-divider">
+				Choose skill to add:
+			</div>
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Skill
+				</div>
+				<select ng-model="selectedSkillId" name="position">
+					<option ng-repeat="skill in skills" ng-value="skill.id">{{ skill.skill_name }}</option>		 
+				</select>
+			</label>
+
+			<button class="rw-button rw-button-blue rw-button-icon icon-yes" ng-click="addSkill()">Add to Profile</button>
+
+		 </div>
+
+		<div class="list">
+			<div class="item item-divider">
+				Couldn't find skill you want? <br>
+				Request skills to be added:
+			</div>
+			<label class="item item-input">
+			<input id="customSkillId" type="text" placeholder="Enter custom skill name" ng-model="customSkill" />
+			</label>
+		</div>
+			<!--new button, just need to adjust royal color -->
+		<button class="rw-button rw-button-purple rw-button-icon icon-envelope"  ng-click="addCustomSkill()">Send request</button>
+ 
+	</div>
+</ion-content>
+</ion-view>

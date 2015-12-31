@@ -1,0 +1,18 @@
+<ion-side-menus enable-menu-with-back-views="false">
+			<ion-side-menu-content>
+				<div class="main-container">	
+				<ion-nav-bar class="top-bar ">
+					<ion-nav-back-button ng-click="previousView()">    
+					</ion-nav-back-button>	  	
+				</ion-nav-bar> 	
+				<ion-nav-view name="home-tab"></ion-nav-view>
+				</div>
+	  		</ion-side-menu-content>
+	   
+	   <!--add it later for ios tablet mode expose-aside-when="large" -->
+			<ion-side-menu side="left" >
+				<ion-content has-bouncing="false" class="main-menu">
+					<main-menu></main-menu>
+				</ion-content>
+			</ion-side-menu>
+	</ion-side-menus>

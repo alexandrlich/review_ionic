@@ -1,0 +1,57 @@
+<div id="main-menu" ng-controller="MainMenuCtrl">
+	<div class="main-menu-holder">
+		<div class="main-menu-profile-info">
+			<div class="main-menu-photo">
+				<image ng-src="{{user.user_image_url}}" err-src="https://api.reviyou.com/api/1.2.2/image/default.pic" />
+			</div>
+			<div class="main-menu-info">
+				<div class="main-menu-name">
+					{{user.showname}}
+				</div>
+				<div ng-show="user.email" class="main-menu-email">{{user.email}}</div>
+			</div>
+			
+			<!--
+			<div class="main-menu-tags"><a ui-sref="tabs.viewselectedtags" menu-close>INTERESTS: <span class="menu-item-counter">{{selectedTagsCount}}</span></a></div>
+			-->
+		</div>
+		<ul class="main-menu-items">
+			<li class="main-menu-item-popular"><a ui-sref="tabs.popular" menu-close>Popular</a></li>
+			<li class="main-menu-item-settings"><a ui-sref="tabs.search" menu-close>Search</a></li>
+			<li class="main-menu-item-tips"><a ui-sref="tabs.viewselectedtags" menu-close>Interests <span class="item-selected-counter">{{selectedTagsCount}}</span></a></li>
+			<li class="main-menu-item-bookmarks"><a ui-sref="tabs.bookmarks" menu-close>Following</a></li>
+			
+			<li class="main-menu-item-news"><a ui-sref="tabs.votedprofiles" menu-close>Voted profiles</a></li>
+			
+			<!--
+			<li class="main-menu-item-news" ><a ui-sref="tabs.news" menu-close>News <span ng-show="recentNewsExist" class="menu-item-counter">new</span></a></li>
+-->
+			<li class="main-menu-item-notifications"><a ui-sref="tabs.notifications" menu-close>Notifications <span ng-if="newNotificationsCount>0" class="item-new-counter">{{newNotificationsCount}}</span></a></li>
+			
+			<!--
+			<li class="main-menu-item-tips"><a ui-sref="blank.intro" menu-close>Intro</a></li>
+			-->
+			<li class="main-menu-item-like">
+				
+				
+				<!--enable when app goes live
+				deviceType is no longer supported - use javascript instead-->
+				<a ng-show="deviceType=='android'" href="#" onclick="window.open('https://play.google.com/store/apps/details?id=com.reviyou.android', '_system');">Like Us</a>
+				<!--we don't know how our ios link will look like hense use facebook link-->
+				<a ng-hide="deviceType=='android'" href="#" onclick="window.open('https://itunes.apple.com/us/app/reviyou/id938306806?mt=8', '_system');">Like Us</a>				
+				
+			</li>
+			<li class="main-menu-item-contact"><a ui-sref="tabs.contact" menu-close>Contact us</a></li>
+			<li class="main-menu-item-settings"><a ui-sref="tabs.settings" menu-close>Settings</a></li>
+			
+			<li class="main-menu-item-agreement"><a ui-sref="tabs.viewterms" menu-close>Terms and Conditions</a></li>
+			
+			<!--alex: suggest we remove those coming soon elements for now at least
+			<li class="main-menu-item-notifications disabled"><a close-menu>Notifications (coming soon)</a></li>
+			-->
+			<li><a class="rw-button rw-button-inline rw-button-disabled rw-button-logout rw-button-icon icon-logout" ng-controller="LoginCtrl" ng-click="logout()" menu-close>Sign out</a>
+</li>
+		</ul>
+
+	</div>
+</div>

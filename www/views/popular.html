@@ -1,0 +1,107 @@
+<ion-view  cache-view="false"  hide-back-button="true">
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button id="createProfileBtn" class="top-bar-btn open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-title>
+		<ng-include src="'views/top-bar/searchPartial.html'"></ng-include>			
+	</ion-nav-title>
+
+<ion-nav-buttons side="right">
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>
+	</ion-nav-buttons>
+	
+
+<ion-content class="ion-content-block container-fluid container-fluid-popular" has-bouncing="false"  >
+
+<div class="page page-popular ">
+
+<div class="popular-subheader">
+	<ion-scroll direction="x" class="wide-as-needed">
+		<span ng-repeat="t in userTags" class="tag-container" ng-class="{'tag-selected': t.selected}">
+	   <button ng-click="filterPopular(t)" class="button" >{{t.name}}</button>
+		</span>
+	  </ion-scroll>
+</div>	
+
+<div  on-swipe-right="onSwipeLeft()">	
+<div ng-if="newTag" class="padding-top10">Add "{{newTag}}" to interests: <a class="rw-tag rw-subtag rw-button-purple" ui-sref="tabs.addtags" >+</a></div>
+
+
+    	
+	
+	
+	
+	
+	<div  class="text-center" ng-if="noResults">
+		No profiles found. Please add more interests from the main menu to see popular profiles.
+	</div>
+	<div class="items-list profiles-list">			
+	<ion-list show-delete="false" show-reorder="false">	       
+		<ion-item ng-repeat="p in popular" 
+                  item="p" class="item-remove-animate">		  
+		  <div class="rw-item profile-item theme-{{ p.theme_name }}">
+			  			<a class="profile-item-holder"  ui-sref="tabs.profile({id:p.id})">
+				<span class="profile-picture-wrapper">
+					<div class="profile-picture">
+					
+					
+					<profilepic src="{{p.url | imageTrust}}" initials="{{ p.initials }}" keep-ratio="false" />
+					
+						<!-- paste img there instad .no-photo if profile has photo -->
+					</div>
+				</span>
+				<span class="profile-info-wrapper">
+					<div class="profile-info">
+						<div class="profile-name">{{ p.name }}</div>
+						<div class="profile-profession">
+							<div class="profile-profession-name">{{ p.last_job.occupation }}</div>
+							<div class="profile-profession-company">{{ p.last_job.company }}</div>
+						</div>
+					</div>
+				</span>
+				<span class="profile-stats-wapper">
+					<div class="profile-stats">
+						<div class="profile-rate">
+							<span class="profile-rate-value">{{p.general_average_rank}}</span><span class="profile-rate-sign">%</span>
+						</div>
+						<div class="profile-additional-stats">
+							<div class="profile-messages">
+								{{p.comments_count}}
+							</div>
+							<div class="profile-views">
+								{{p.views_count}}
+							</div>
+						</div>
+					</div>
+				</span>
+			
+			</a>
+	
+			</div>
+        </ion-item>
+        
+        
+    </ion-list>
+ 	</div> 
+	
+	
+	
+	
+	
+
+	   <ion-infinite-scroll
+	    ng-if="moreDataCanBeLoaded"
+	    on-infinite="loadMore(false)"
+	    distance="1%">
+	  </ion-infinite-scroll>
+</div>
+</div>
+</ion-content>
+
+</ion-view>

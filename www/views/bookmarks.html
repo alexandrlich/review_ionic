@@ -1,0 +1,64 @@
+<ion-view  cache-view="false" hide-back-button="true">
+ 
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button id="createProfileBtn" class="top-bar-btn open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-title>
+		<h1 class="title light">Following</h1>
+	</ion-nav-title>
+	<ion-nav-buttons side="right">
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>
+	</ion-nav-buttons>
+	
+
+<ion-content has-bouncing="false" class="ion-content-block container-fluid">
+<div class="page page-bookmarks">
+	<div  class="text-center" ng-hide="bookmarks.length">
+		You are not following any profiles yet.
+	</div>
+	
+	<ul class="items-list profiles-list" ng-show="bookmarks.length">
+		<li class="rw-item profile-item theme-{{ b.theme_name }}" ng-repeat="b in bookmarks">
+			<div class="profile-item-holder">
+				<a class="profile-picture-wrapper" ui-sref="tabs.profile({id:b.id})">
+					<div class="profile-picture">
+					
+						<profilepic src="{{b.url | imageTrust}}" initials="{{ b.initials }}" keep-ratio="false" />
+					
+						
+					</div>
+				</a>
+				
+				<!--change logic to first load profile and then do routing for the better UI experience -->
+				<a class="profile-info-wrapper" ui-sref="tabs.profile({id:b.id})">
+					<div class="profile-info">
+						<div class="profile-name">{{b.name}}</div>
+						<div class="profile-profession">
+							<div class="profile-profession-name">{{ b.last_job.occupation }}</div>
+							<!-- it should not be here!!! insted we should show average rank!! 
+							<div class="profile-profession-company">{{ popular.last_job.company }}</div>
+							-->
+							<div  class="profile-profession-company">{{ b.general_average_rank}}% General rate </div>
+						</div>
+					</div>
+				</a>
+				<div class="profile-bookmark-status">
+					<!--
+					<span class="ion-ios-close-empty">Following</span>
+					-->
+					<div class="rw-button rw-button-blue profile-button-follow rw-button-compact rw-button-icon icon-unfollow" ng-click="deleteBookmark(b.id)">Unfollow</div>
+					
+					
+				</div>
+			</div>
+		</li>
+	</ul>
+</div>
+
+</ion-view>
+</ion-content>

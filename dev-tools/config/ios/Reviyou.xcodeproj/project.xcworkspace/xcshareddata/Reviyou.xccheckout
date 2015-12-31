@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>E411AC0E-7B5F-4F6F-BF9F-3094CD0E20A0</string>
+	<key>IDESourceControlProjectName</key>
+	<string>Reviyou</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C829E33DD79576E000C54A7CB360E64F8C712062</key>
+		<string>https://bitbucket.org/Sashany13/reviyoumobile.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>platforms/ios/Reviyou.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C829E33DD79576E000C54A7CB360E64F8C712062</key>
+		<string>../../../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://bitbucket.org/Sashany13/reviyoumobile.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C829E33DD79576E000C54A7CB360E64F8C712062</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C829E33DD79576E000C54A7CB360E64F8C712062</string>
+			<key>IDESourceControlWCCName</key>
+			<string>mobile</string>
+		</dict>
+	</array>
+</dict>
+</plist>

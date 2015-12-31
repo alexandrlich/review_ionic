@@ -1,0 +1,22 @@
+<ion-modal-view  class="rypopup popup-open">	 	
+				
+<ion-content  class="vote-popup" has-bouncing="false" ng-controller="VotePageCtrl" cache-view="false" scroll="false">
+
+	<h3 class="vote-title">Please Vote</h3>
+	<h5 class="vote-result-title" ng-show="!!previousVote" >Your previous vote is {{ previousVote }}</h5>
+	<h5 class="vote-result-title" ng-show="!previousVote" >Your didn't previously vote for this</h5>
+
+	<div class="vote-variant-container">
+		<div ng-repeat="voteMark in voteMarks" ng-click="setVote(voteMark)" ng-class="{active: previousVote === voteMark}" class="vote-variant">
+			<div class="vote-variant-text">{{ voteMark }}</div>
+		</div>
+	</div>
+	
+	<div class="holder-close-popup">
+		<button class="rw-button rw-button-inline rw-button-special rw-button-icon button-close-popup icon-no" ng-click="close()">Cancel</button>
+	</div>
+</div>
+
+
+</ion-content>
+</ion-modal-view>

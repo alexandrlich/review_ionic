@@ -1,0 +1,30 @@
+<ion-view>
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn top-bar-left open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button id="createProfileBtn" class="top-bar-btn top-bar-right open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-title>
+		<ng-include src="'views/top-bar/searchPartial.html'"></ng-include>
+	</ion-nav-title>
+
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false">
+
+	<div class="page page-news">
+		<h1 class="page-title">News</h1>
+		<ul class="items-list news-list">
+			<li ng-class="{'news-item': article.recent}" class="rw-item" ng-repeat="article in news" ui-sref="tabs.singlenews({id:article.id})">
+			<!--ui-sref="tabs.news.single({id:article.id})"  ng-click="test22(article.id)"    -->
+				<div class="article-title">{{ article.title }}</div>
+				<div class="article-date">{{ article.date | date: 'dd MMMM, yyyy'}}</div>
+			</li>
+		</ul>
+	</div>
+
+</ion-content>
+</ion-view>

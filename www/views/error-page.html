@@ -1,0 +1,53 @@
+<ion-view hide-back-button="true" ng-controller="ErrorPageCtrl">
+
+	<ion-nav-title>
+		<h1 class="title light">Error Page</h1>
+	</ion-nav-title>
+	
+<ion-content class="ion-content-block" has-bouncing="false" scroll="false">
+	
+<div class="page-error">
+
+	<div class="page-error-holder">
+
+		<div class="main-text">
+			<div class="error-image"></div>
+			<h1>Oops</h1>
+			<h3>Sorry, there was a problem</h3>
+		</div>
+		
+		<div class="secondary-text">
+			
+			<div ng-switch on="errorCode">
+				<p>error code: {{errorCode}}</p>
+				<p ng-switch-when="500">There was error on the server.</p>
+				<p ng-switch-when="502">Technical difficulties: servers are not available at this moment.</p>
+				<p ng-switch-when="404">Requested resource is not found.</p>
+				<p ng-switch-when="403">This action is not authorized.</p>
+				<p ng-switch-when="410">App version you have is no longer supported. Please go to the store to update it and relogin.</p>
+				
+				<p ng-switch-when="timeout">Servers are currently overloaded.</p>
+				<p ng-switch-when="request">Request is invalid.</p>
+				<p ng-switch-when="400">Request is invalid.</p>
+				<p ng-switch-default>{{customErrorMessage}}</p>
+  				
+				
+			</div>	
+			
+			
+			   <a ng-if="errorCode==401 || errorCode==403 || errorCode==410" class="rw-button rw-button-purple" ui-sref="blank.login">Login back</a>
+	
+			        <a ng-if="errorCode!=401 && errorCode!=403 && errorCode!=410" class="rw-button rw-button-purple" ng-click="previousView()">Go back</a>
+			
+					</div>		
+		<div class="last-text">
+			<p>Please contact us to report a problem</p>
+			<a class="rw-button rw-button-purple rw-button-icon icon-envelope" href="mailto:help@reviyou.com">Email Us</a>
+		</div>
+
+	</div>
+	
+</div>
+
+</ion-content>
+</ion-view>

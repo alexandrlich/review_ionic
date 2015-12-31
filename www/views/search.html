@@ -1,0 +1,119 @@
+<ion-view cache-view="false" hide-back-button="true">
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button id="createProfileBtn" class="top-bar-btn open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-buttons side="right">
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>
+	</ion-nav-buttons>
+	
+	<ion-nav-title>
+		<h1 class="title light">Search</h1>
+	</ion-nav-title>
+
+
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false" ng-controller="SearchCtrl">
+
+<div class="page page-search"  >
+	<div class="search-line" >
+		<div class="search-block input-holder item-input-inset">
+		<!-- 
+			<input class="input-control input-search" type="text" placeholder="Search" ng-model="searchString" ng-click="search()"
+			focus-me="true" 
+			 />
+-->				 
+			 	<div class="item-input-wrapper ">
+                        <i class="icon ion-android-search"></i>
+                        <input type="search" placeholder="Search" ng-model="searchString" ng-change="change()" maxlength="50"/>
+                        <i ng-if="searchString.length > 0" ng-click="clearSearch()" class="icon ion-close"></i>
+                      </div>
+			 
+		</div>
+
+		<div class="button-block">
+		<!-- it doesn't have to be submit input, just a button -->
+			<input class="rw-button rw-button-purple rw-button-inline rw-button-compact" type="submit" value="Search" maxlength="100" ng-click="search()"  />
+			
+		
+			
+			
+		</div>
+	</div> 	
+
+
+	<ul class="items-list profiles-list" ng-show="searchResult.length">
+		<li class="rw-item profile-item theme-{{profile.theme_name}}" ng-repeat="profile in searchResult">
+			
+			<a class="profile-item-holder" ui-sref="tabs.profile({id:profile.id})">
+				<div class="profile-picture-wrapper">
+					<div class="profile-picture-wrapper">
+						<div class="profile-picture">
+							<profilepic src="{{profile.url | imageTrust}}" initials="{{ profile.initials }}" keep-ratio="false"/>
+						</div>
+					</div>
+				</div>
+				<div class="profile-info-wrapper">
+					<div class="profile-info">
+						<div class="profile-name">{{ profile.name }}</div>
+						<div class="profile-profession">
+							<div class="profile-profession-name">{{ profile.occupation }}</div>
+							
+							<div class="profile-profession-company">{{ profile.company }}</div>
+							
+							
+						</div>
+					</div>
+				</div>
+				<span class="profile-stats-wapper">
+					<div class="profile-stats">
+						<div class="profile-rate">
+							<span class="profile-rate-value">{{profile.general_average_rank}}</span><span class="profile-rate-sign">%</span>
+						</div>
+						<div class="profile-additional-stats">
+							<div class="profile-messages">
+								{{profile.comments_count}}
+							</div>
+							<div class="profile-views">
+								{{profile.views_count}}
+							</div>
+						</div>
+					</div>
+				</span>
+				<!--
+				<div class="profile-goto-icon">
+					<i class="icon icon-forward"></i>
+				</div>
+				-->
+			</a>
+		</li>
+	</ul>
+	
+	<div class="block-createprofile" ng-show="searchPerformed">
+		<div class="text-createprofile">
+			<span ng-show="!searchResult.length">Search didn't return any results. Please try something else or add more interests(categories you are interested in) from the menu</span>
+		</div>
+		<!--
+		<button class="rw-button rw-button-purple icon-create rw-button-compact button-createprofile" ui-sref="tabs.profileCreate1">Create</button>
+		-->
+	</div>
+	
+	<div class="block-createprofile" ng-hide="searchString.length">
+		<div class="text-createprofile">
+			You can search by first and last name, movie name, occupation, any relevant information you can think of!
+		</div>
+		<div class="text-createprofile">
+			Most relevant results will be returned on top according to your specified interests!
+		</div>
+
+	</div>
+
+</div>
+
+</ion-content>
+</ion-view>

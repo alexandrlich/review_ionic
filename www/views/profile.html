@@ -1,0 +1,211 @@
+<ion-view cache-view="false" >
+
+<!--theme-{{profileTheme}} is not currently applied due to bug so we du it manually
+https://github.com/driftyco/ionic/issues/2732 in profile.js and run.js
+--> 
+
+	<ion-nav-buttons side="right">
+		<button id="shareProfileBtn"  class="top-bar-btn share-profile" ng-click="share()">share</button>
+		<!--disable profile creation for now
+		<button id="createProfileBtn" class="top-bar-btn open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+		-->
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>	</ion-nav-buttons>
+	<ion-nav-title>
+		 <ng-include src="'views/top-bar/searchPartial.html'"></ng-include>
+	</ion-nav-title>	
+    
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false">
+<div class="page page-view-profile theme-{{profile.theme_name}}">
+
+	<div class="container-fluid profile-header">
+		<div class="profile-top-info">
+			<div class="profile-name-holder">
+				<div class="profile-name">{{profile.name}}</div>
+				<div ng-if="profile.email" class="profile-email">({{profile.email}})</div>
+			</div>
+		</div>
+		
+		<div class="profile-stats">
+		
+			<div class="profile-picture-wrapper">
+				<div class="profile-picture">
+					<profilepic src="{{profile.url  | imageTrust}}" initials="{{ profile.initials }}" keep-ratio="true" />
+					
+				</div>
+			</div>
+			<div class="profile-header-buttons-wrapper">
+				<div class="profile-header-buttons" >
+					<div class="profile-rate">
+						<span class="profile-rate-value" ng-if="profile.votes_count>0">{{profile.general_average_rank}}</span>
+						<span class="profile-rate-value" ng-if="profile.votes_count==0">--</span>
+						
+						<span class="profile-rate-sign" ng-if="profile.votes_count>0">%</span>
+						<sub>({{profile.votes_count}}votes)</sub>
+						<div class="profile-rate-text">General rate</div>
+					</div>
+					
+					<button class="rw-button rw-button-red profile-button-vote rw-button-icon icon-thumb" ng-click="openVote()">Vote</button>
+		
+					
+					<button ng-if="profile.is_bookmarked" class="rw-button rw-button-blue profile-button-follow rw-button-compact rw-button-icon icon-unfollow" ng-click="changeProfileBookmarkState()">Unfollow</button>
+					<button ng-if="!profile.is_bookmarked" class="rw-button rw-button-blue profile-button-follow rw-button-compact rw-button-icon icon-follow" ng-click="changeProfileBookmarkState()">Follow</button>				
+						
+					
+										
+				</div>
+				
+		
+			</div>
+		</div>	
+				<div class="profile-tags-section"  >
+						<button ng-repeat="tag in profile.tags" class=" profile-tag button button-small ng-binding" ui-sref="tabs.popularByTag({tagName: tag})">{{tag}}</button>
+					
+				</div>		
+	</div>
+	
+	
+	<div class="section profile-jobs">
+		<div class="section-heading">
+			<h4>Work</h4><button class="button-heading button-profile-addto" ng-if="profile.is_author" ui-sref="tabs.addJob({isRequest: 'false',id:profile.id})">add job</button>
+			<button class="button-heading button-profile-addto" ng-if="!profile.is_author" ui-sref="tabs.addJob({isRequest: 'true',id:profile.id})">add job request</button>
+		</div>
+	
+		
+		<ion-list>
+		        <div ng-repeat="job in profile.jobs">
+		          
+		          
+		          <ion-item ng-if="!job.companies.length" class="item-stable">
+		              <i class="icon"></i> &nbsp;{{job.occupation}} 
+		           	<span>&nbsp;{{job.start_date | date: 'dd MMMM, yyyy'}}
+					<span ng-if="job.end_date"> - {{job.end_date | date: 'dd MMMM, yyyy'}}</span>
+				</span>
+				  </ion-item>
+		          
+		          
+		          
+		          <ion-item ng-if="job.companies.length" class="item-stable"
+		                    ng-click="toggleGroup(job)"
+		                    ng-class="{active: isGroupShown(job)}">
+		              <i class="icon" ng-class="isGroupShown(job) ? 'ion-minus' : 'ion-plus'"></i> &nbsp;{{job.occupation}} 
+		           	<span>&nbsp;{{job.start_date | date: 'dd MMMM, yyyy'}}
+					<span ng-if="job.end_date"> - {{job.end_date | date: 'dd MMMM, yyyy'}}</span>
+				</span>
+				  </ion-item>
+		          <ion-item class="item-accordion"
+		                    ng-repeat="company in job.companies"
+		                    ng-show="isGroupShown(job)">
+		            &middot;{{company.name}}<span>&nbsp;{{company.start_date}}&nbsp;{{company.end}}</span>
+		          </ion-item>
+		        </div>
+		      </ion-list>
+
+		
+	</div>
+
+	<div class="section profile-skills">
+		<div class="section-heading">
+			<h4>Skills</h4><button class="button-heading button-profile-addto" ng-click="addSkillNav()">add skill</button>
+		</div>
+		<ul class="profile-items-list profile-skills-list">
+			<li class="profile-item profile-skills-item" ng-repeat="skill in skills track by $index">
+				<div class="profile-skills-prop">
+					<span class="skill-name">{{skill.skill_name}}</span>
+					<sub>({{skill.votes_count}}votes)</sub>
+					<span class="skill-rate" ng-if="skill.votes_count>0">{{skill.skill_average_rank}}%</span>
+					
+					
+				</div>
+			
+				<div class="profile-skills-vote"><button class="rw-button rw-button-purple rw-button-inline" ng-click="openSkillVote(skill.id)">Vote</button></div>
+			</li>
+		</ul>
+		<button class="button-load-more" ng-if="skillsShortcut()" ng-click="showAllSkills()">Show all skills</button>
+	</div>
+	
+
+	
+	<div class="section profile-comments" ng-controller="CommentCtrl" >
+		<div class="section-heading">
+			<h3>Reviews ({{profile.comments_count}})</h3>
+		</div>
+		<div>
+			<h5>Add your review:</h5>
+		</div>
+		<div class="section profile-leave-comment">
+			{{ 1000 - newComment.length }} characters left
+			<textarea class="input-control profile-leave-comment-textarea" type="text" placeholder="Your comment" ng-model="newComment"></textarea>
+			<button class="rw-button rw-button-blue rw-button-icon" ng-click="sendComment()" ng-disabled="newComment.length >= 1001">Add Comment</button>
+		
+		</div>
+
+
+<div class="profile-items-list profile-comments-list">			
+	<ion-list show-delete="false" show-reorder="false">
+<ion-item ng-repeat="comment in comments" item="c" class="item-remove-animate">
+        <div class="profile-item">
+			<div class="profile-comment-stats">
+					<div class="profile-comment-avatar-holder"><img class="profile-comment-avatar" ng-src="{{comment.user_image_url}}" err-src="https://api.reviyou.com/api/1.2.2/image/default.pic" alt="{{comment.user_first_name}}"></div>
+					<div class="profile-comment-name">{{comment.user_first_name}} {{comment.user_last_name}}</div>
+					<div class="profile-comment-date">{{comment.create_time | date: 'dd MMMM, yyyy'}}</div>
+				</div>
+				<div class="profile-comment-content">
+					<p>{{comment.text}}</p>
+				</div>	
+				
+				<div class="profile-comment-buttons">
+					<button
+						class="rw-button rw-button-inline rw-button-compact rw-button-yellow"
+						ng-class="{'rw-button-outline': !comment.warm_voted}"
+						ng-click="commentVote(comment.comment_id,'group_warm',comment.warm_voted)">
+						<span>{{profile.warm_voted ? '' : 'Warm '}}</span>{{comment.warm_count}}
+					</button>
+
+					<button
+						class="rw-button rw-button-inline rw-button-compact rw-button-blue" 
+						ng-class="{'rw-button-outline': !comment.cold_voted}"
+						ng-click="commentVote(comment.comment_id,'group_cold',comment.cold_voted)">
+						<span>{{profile.cold_voted ? '' : 'Cold '}}</span>{{comment.cold_count}}
+					</button>
+
+					<button
+						 class="rw-button rw-button-inline rw-button-compact rw-button-green"  
+						 ng-class="{'rw-button-outline': !comment.troll_voted}"
+						 ng-click="commentVote(comment.comment_id,'group_troll',comment.troll_voted)">
+						 <span>{{profile.troll_voted ? '' : 'Mark Troll '}}</span>{{comment.troll_count}}
+					</button>
+
+					<button
+						class="rw-button rw-button-inline rw-button-compact rw-button-disabled" 
+						ng-class="{'rw-button-outline': !comment.report_voted}"
+						ng-click="commentVote(comment.comment_id,'group_report',comment.report_voted)">
+						<span>{{profile.report_voted ? '' : 'Complain '}}</span>{{comment.report_count}}
+					</button>
+				</div>
+				<button class="profile-comment-delete" ng-show="user_id==comment.user_id" ng-click="deleteComment(comment.comment_id)">&times;</button>
+		
+        </div>
+        
+        
+        </ion-item>
+
+      </ion-list>		
+   <ion-infinite-scroll
+    ng-if="moreDataCanBeLoaded"
+    on-infinite="loadMore()"
+    distance="5%">
+  </ion-infinite-scroll>
+</div>				
+
+
+
+
+	</div>	
+	<div class="section profile-delete-buttons">
+		<button class="rw-button rw-button-delete rw-button-icon rw-button-disabled " ng-click="requestToRemoveProfile()" ng-show="!profile.can_delete">Request removal</button>
+		<button class="rw-button rw-button-delete rw-button-icon rw-button-disabled icon-unfollow" ng-click="removeProfile()" ng-show="profile.can_delete">Remove profile</button>
+	</div>
+</div>
+</ion-content>
+</ion-view>

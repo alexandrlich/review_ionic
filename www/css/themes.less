@@ -1,0 +1,112 @@
+.theme-1 {
+	.rvtheme(#440817, #4e2832, #590016, #bd002f);	
+}
+
+.theme-2 {
+	.rvtheme(#430720, #633749, #59112f, #bd2563);
+}
+
+.theme-3 {
+	.rvtheme(#01272d, #284d54, #00343e, #006f84);
+}
+
+.theme-4 {
+	.rvtheme(#012635, #2f4e5a, #003f59, #0086bd);
+}
+
+.theme-5 {
+	.rvtheme(#132601, #354f1f, #2d4e11, #60a625);
+}
+
+.theme-6 {
+	.rvtheme(#221f01, #494519, #595100, #bdac00);
+}
+
+.theme-7 {
+	.rvtheme(#1b1550, #3f3a6a, #2c2754, #5d54b3);
+}
+
+.theme-8 {
+	.rvtheme(#012b17, #23533b, #39543e, #54b382);
+}
+
+.theme-9 {
+	.rvtheme(#375021, #514325, #593c00, #bd7f00);
+}
+
+.theme-10 {
+	.rvtheme(#430827, #613049, #593c4b, #bd7f9f);
+}
+
+.theme-11 {
+	.rvtheme(#460a0a, #633333, #542727, #b35454);
+}
+
+.theme-12 {
+	.rvtheme(#410638, #5d2e56, #53254c, #b14fa2);
+}
+
+
+//those is not so bright
+.theme-13 {
+	.rvtheme(#012829, #224f51, #628183, #54afb3);
+}
+
+
+.theme-14 {
+	.rvtheme(#1f2001, #4a4b1e, #535427, #b1b354);	
+}
+
+.theme-15 {
+	.rvtheme(#012825, #285350, #1c5955, #3bbdb5);	
+}
+
+
+.rvtheme(@color1, @color2, @border_color, @user_color) {
+	
+	.top-bar& {
+		background: @color1 !important;//change color of the top bar from the javascript due to ios8 issues
+		border-color: @color1 !important;
+	}
+	
+	.page& {
+		&:before {
+			 //because of ios fix we changed implementation a little bit(alex)
+			 //background: @color1;
+		}
+		&.page-view-profile {
+			.profile-header {
+				.gradient(@color1, @color2);
+			}
+			.profile-stats {
+				.profile-picture-wrapper {
+					.profile-picture {
+						.no-photo {
+							background-color: @user_color;
+						}
+					}
+				}
+			}
+			.profile-tags-section {
+				.profile-tag {
+					background-color: @user_color;
+				}
+			}
+		}
+	}
+	.profiles-list & {
+		.profile-picture {
+			border-color: @border_color;
+			.no-photo {
+				background-color: @user_color;
+			}
+		}
+		.profile-name {
+			// comment next line to disable skittles
+			color: @user_color;
+		}
+		
+	}
+	
+
+}

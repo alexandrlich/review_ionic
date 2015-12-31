@@ -1,0 +1,212 @@
+#!/usr/bin/env node
+
+
+var fs = require('fs');
+var path = require('path');
+var sys = require('sys')
+var exec = require('child_process').exec;
+//for recursive copy
+var wrench = require('wrench'),
+    util = require('util');
+
+console.log("process.env.CORDOVA_PLATFORMS: "+process.env.CORDOVA_PLATFORMS);
+console.log("process.env.CORDOVA_HOOK: "+process.env.CORDOVA_HOOK);
+
+ 
+// no need to configure below
+//var rootdir = process.argv[2]";
+var rootdir = process.cwd();
+	
+	
+var filestocopy;	
+
+var actions;
+	
+//=============== actual build commands=======================================
+if(process.env.CORDOVA_PLATFORMS == 'ios') {
+
+	actions = [
+		sleep6000,
+		
+		
+		//removeXcodeMainPrj, //should be done after plugins installation, otherwise it would conflict with plugins since asynch
+		//removeXcodeSecondaryPrj,
+		//moveXcode,
+		//moveIOSCrashlyticsConfigs,
+		//moveIOSNewrelicConfigs,
+		
+		
+		//copyAppIcons,
+		
+		
+		openXcode
+	];callback();
+	
+	
+} else if(process.env.CORDOVA_PLATFORMS == 'android') {
+	console.log("skip this hook");
+	
+} else {
+	console.log("platform type is not supported");
+	process.exist(1)
+	
+}	
+//======================================================
+
+
+
+//helper to copy files
+function copyFile(src, dest) {
+	var srcfile = path.join(rootdir, src);
+	var destfile = path.join(rootdir, dest);
+	console.log("copying "+srcfile+" to "+destfile);
+	var destdir = path.dirname(destfile);
+	if (fs.existsSync(srcfile) && fs.existsSync(destdir)) {
+	   fs.createReadStream(srcfile).pipe(
+	   fs.createWriteStream(destfile));
+	} else {
+		console.log('stderr : can not find destination or a source file');
+		process.exit(1);
+	}
+
+}
+
+
+function moveIOSCrashlyticsConfigs() {
+	console.log("copy crashlytics to xcode");
+	
+	wrench.copyDirSyncRecursive('dev-tools/crashlytics/ios/Crashlytics.framework/', 'platforms/ios/Crashlytics.framework',
+	 {
+    	forceDelete: true,
+    	excludeHiddenUnix: true,
+    	preserveFiles: false,
+    	inflateSymlinks:false
+	});
+	
+	//2 copy custom app delegate	
+	copyFile('dev-tools/crashlytics/ios/AppDelegate.m', 'platforms/ios/Reviyou/Classes/AppDeleGate.m');//also needed for newrelic
+		
+	callback();
+}
+
+
+function moveIOSNewrelicConfigs() {
+	console.log("copy newrelic to xcode");
+	
+	wrench.copyDirSyncRecursive('dev-tools/newrelic/ios/newRelicAgent.framework/', 'platforms/ios/newRelicAgent.framework',
+	 {
+    	forceDelete: true,
+    	excludeHiddenUnix: true,
+    	preserveFiles: false,
+    	inflateSymlinks:false
+	});
+	
+	//2 copy custom newrelic include	
+	copyFile('dev-tools/newrelic/ios/Reviyou-Prefix.pch', 'platforms/ios/Reviyou/Reviyou-Prefix.pch');
+	
+	callback();
+
+}
+
+
+//async remove of the generated xcode
+function removeXcodeMainPrj() {
+	console.log("remove generated reviyouMobile xcode proj for ios");
+	
+    var rimraf = require("rimraf");
+    rimraf('platforms/ios/Reviyou.xcodeproj', function() {
+        console.log("Deleted main xcode directory");
+       	callback();
+    });
+
+}
+
+function removeXcodeSecondaryPrj() {
+	console.log("remove generated cordovaLib xcode proj for ios");
+	
+    var rimraf = require("rimraf");
+    rimraf('platforms/ios/CordovaLib/CordovaLib.xcodeproj', function() {
+        console.log("Deleted secondary xcode directory");
+       	callback();
+    });
+}
+
+
+//copy existing xcode configuration
+function moveXcode() {
+	console.log("copy xcode proj for ios");
+	
+	wrench.copyDirSyncRecursive('dev-tools/config/ios/Reviyou.xcodeproj/', 'platforms/ios/Reviyou.xcodeproj',
+	 {
+    	forceDelete: true,
+    	excludeHiddenUnix: false,
+    	preserveFiles: false,
+    	preserveTimestamps: false,
+    	inflateSymlinks:false
+	});
+	
+	//override arm64 architecture for cordova subproject
+	
+		wrench.copyDirSyncRecursive('dev-tools/config/ios/CordovaLib.xcodeproj/', 'platforms/ios/CordovaLib/CordovaLib.xcodeproj',
+	 {
+    	forceDelete: true,
+    	excludeHiddenUnix: false,
+    	preserveFiles: false,
+    	preserveTimestamps: false,
+    	inflateSymlinks:false
+	});
+	
+	
+	callback();
+}
+
+
+/*
+//temporary, should work without it in cordova 3.5 but doesn't in 3.6.3 somehow http://stackoverflow.com/questions/23830467/generating-ios-and-android-icons-in-cordova-phonegap
+function copyAppIcons(){
+
+	wrench.copyDirSyncRecursive('appicons/icon/Images.xcassets/', 'platforms/ios/Reviyou/Images.xcassets',
+	 {
+    	forceDelete: true,
+    	excludeHiddenUnix: false,
+    	preserveFiles: false,
+    	preserveTimestamps: false,
+    	inflateSymlinks:false
+	});
+	
+	callback();
+}
+*/
+function openXcode() {
+	exec("open platforms/ios/*.xcodeproj");
+	callback();
+
+}
+
+
+//executes next command(for async list of commands)
+function callback() {
+    if (actions.length) {
+        actions.shift()();
+    } else {
+        console.log("030 after hook for ios is Done");
+    }
+}
+
+function sleep6000() {
+	sleep(6000);
+    callback();
+}
+
+function sleep(time) {
+    var stop = new Date().getTime();
+    while(new Date().getTime() < stop + time) {
+        ;
+    }
+}
+
+	
+	
+	
+
+	

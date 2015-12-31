@@ -1,0 +1,25 @@
+<ion-view ng-controller="TermsCtrl" hide-back-button="true">
+
+			  <ion-nav-buttons side="right">
+			  	<button class="button button-clear button-light icon-right" ng-click="agree(true)">Accept</button>
+		   	</ion-nav-buttons>
+			<ion-nav-title><h1 class="title light">Accept Terms and Privacy</h1>
+			</ion-nav-title>	
+
+
+	<ion-content  class="ion-content-block container-fluid" has-bouncing="false">
+	<div data-ng-include src="'views/termsPartial.html'"></div>
+	<!--old not ionic buttons
+	<div class="agreement-buttons-block" ng-hide="isAccepted()">
+		<button class="button button-purple button-icon icon-yes" ng-click="agree(true)">Agree</button>
+		<button class="button button-disabled button-icon icon-no" ng-click="agree(false)">Don't allow</button>
+	</div>
+	-->
+	<div ng-hide="isAccepted">
+		<button class="rw-button rw-button-purple rw-button-icon icon-yes" ng-click="agree(true)">Accept</button>
+		<button class="rw-button rw-button-disabled rw-button-icon icon-no" ng-click="agree(false)">Don't accept</button>
+	</div>
+
+
+</ion-content>
+</ion-view>

@@ -1,0 +1,9 @@
+/node_modules
+/platforms
+/dist
+.tmp
+.sass-cache
+.idea
+/www/bower_components
+/plugins
+/www/lib/

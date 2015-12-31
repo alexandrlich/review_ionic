@@ -1,0 +1,167 @@
+#!/usr/bin/env node
+
+//this hook removes all your plugins(we should reinstall plugins every time, otherwise some config data will be overridden in AndroidManifest.xml after platfrom creation by other hooks
+
+// add your plugins to this list--either the identifier, the filesystem location or the URL
+var pluginlist = [
+	"com.phonegap.plugins.facebookconnect",
+	"org.apache.cordova.inappbrowser",
+    "org.apache.cordova.device",
+    "com.oauthio.plugins.oauthio",
+    "org.apache.cordova.splashscreen",
+    //"it.mobimentum.phonegapspinnerplugin",
+    "nl.x-services.plugins.socialsharing",
+    "nl.x-services.plugins.launchmyapp",
+    "org.apache.cordova.network-information",
+    "org.apache.cordova.dialogs",
+    "org.apache.cordova.statusbar",
+    "com.danielcwilson.plugins.googleanalytics",
+    "com.phonegap.plugins.PushPlugin",
+    "cordova-plugin-media",
+    "cordova-plugin-file"
+	];
+
+
+
+
+var fs = require('fs');
+var path = require('path');
+var sys = require('sys')
+var exec = require('child_process').exec;
+//for recursive copy
+var wrench = require('wrench'),
+    util = require('util');
+
+console.log("process.env.CORDOVA_PLATFORMS: "+process.env.CORDOVA_PLATFORMS);
+console.log("process.env.CORDOVA_HOOK: "+process.env.CORDOVA_HOOK);
+
+ 
+// no need to configure below
+//var rootdir = process.argv[2]";
+var rootdir = process.cwd();
+	
+	
+var filestocopy;	
+
+var actions;
+	
+var platform;	
+//=============== actual build commands=======================================
+if(process.env.CORDOVA_PLATFORMS == 'ios' || process.env.CORDOVA_PLATFORMS == 'android') {
+	platform = 'ios';
+	
+	actions = [
+		killXcode,
+		removePlugins,
+		removePlatformIos,
+		removePlatformAndroid		
+	];callback();
+} else {
+	console.log("platform type is not supported");
+	process.exist(1)
+	
+}	
+//======================================================
+
+function killXcode() {
+	console.log("Killing xcode...")	
+	exec("killall Xcode");
+	callback();
+}
+
+//remove all your plugins
+function removePlugins() {
+	console.log("list existing plugins:");
+	exec("cordova plugin list", function (error, stdout, stderr){
+		console.log(stdout);
+	});
+		
+		
+	var packageJSON = require('../../package.json');
+	
+	delete packageJSON.cordovaPlugins;
+	
+
+	fs.writeFile('package.json', JSON.stringify(packageJSON, null, 2));	
+		
+		
+		
+	var rimraf = require("rimraf");
+    pluginlist.forEach(function(plug) {
+		console.log("remove plugin " + plug);
+		/*
+		exec("cordova plugin rm " + plug, function (error, stdout, stderr) {
+			console.log(stdout);
+			if (stderr != "") {
+				console.log('stderr1 ' + stderr);
+				//process.exit(1);
+			} 
+		})
+		*/
+		//manually removing just to make sure
+		rimraf('plugins/'+plug, function() {
+        	console.log("Deleted plugin");
+		});
+	});
+	//cleanup plugins config(just to be safe)
+	rimraf('plugins/ios.json', function() {
+        console.log("Deleted ios plugins config file");
+    });
+    rimraf('plugins/android.json', function() {
+        console.log("Deleted android plugins config file");
+    });
+    
+	callback();
+    
+	
+}
+
+function removePlatformIos() {
+	removePltfm("ios")
+}
+
+function removePlatformAndroid() {
+	removePltfm("android")
+}
+function removePltfm(pltfm) {
+	console.log("remove " + pltfm +" platform");
+	/*
+	exec("cordova platform rm " + pltfm, function (error, stdout, stderr) {
+		console.log(stdout);
+		if (stderr != "") {
+			console.log('stderr2 ' + stderr);
+			process.exit(1);
+		} 
+	});
+	*/
+	
+	//cleanup platform(just to be safe)
+	var rimraf = require("rimraf");
+    rimraf('platforms/'+pltfm, function() {
+        console.log("Deleted platform " + pltfm +  " folder");
+        callback();
+    });
+}
+
+
+
+function callback() {
+    if (actions.length) {
+        actions.shift()();
+    } else {
+        console.log("before hook is Done");
+    }
+}
+
+function sleep(time) {
+    var stop = new Date().getTime();
+    while(new Date().getTime() < stop + time) {
+        ;
+    }
+}
+
+	
+	
+	
+
+	

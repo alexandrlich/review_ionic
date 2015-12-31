@@ -1,0 +1,172 @@
+#!/usr/bin/env node
+
+	//removed plugin
+	//"dev-tools//local_plugins_repo//org.apache.cordova.file-transfer",//laods file plugin as a dependency
+	//"dev-tools//local_plugins_repo//org.apache.cordova.inappbrowser",//oauthio loads inappbrowser as a dependency
+  
+
+var sys = require('sys')
+var exec = require('child_process').exec;
+
+
+console.log("process.env.CORDOVA_PLATFORMS: "+process.env.CORDOVA_PLATFORMS);
+console.log("process.env.CORDOVA_HOOK: "+process.env.CORDOVA_HOOK);
+
+	
+
+//installs all your plugins
+function installPlugins() {
+	console.log("list existing plugins:");
+	exec("cordova plugin list", function (error, stdout, stderr){
+		console.log(stdout);
+	});
+		
+	actions = [
+			installFacebookPlugin,
+			installDevicePlugin,
+			installOauthioPlugin,
+			installInAppBrowser,
+			installSplashscreenPlugin,
+			//installSpinnerPlugin,
+			installNetworkPlugin,
+			installDialogsPlugin,
+            installStatusBarPlugin,
+			installIonicKeyboardPlugin,
+			installLaunchmyappPlugin,
+			installGAPlugin,
+			addToClassPath,
+            installSocialSharingPlugin,
+            installNotificationsPlugin,
+            installPluginFile,
+            installMediaPlugin
+		];callback();	
+		
+	
+
+
+
+}installPlugins();
+
+//for facebook\android after update read a readme inside of the plugin\platform\android - it has an additional libraries to add to the classpath
+function addToClassPath() {
+	if(process.env.CORDOVA_PLATFORMS == 'android') {
+		var addToClassPath1 = "android update project --subprojects --path \"platforms/android\" --target android-21 --library \"CordovaLib\"";
+		var addToClassPath2 = "android update project --subprojects --path \"platforms/android\" --target android-21 --library \"FacebookLib\"";	
+		console.log("add facebook libraries to the path:");
+			
+		exec(addToClassPath1, function (error, stdout, stderr) {
+			console.log(stdout);
+			if (stderr != "") {
+				console.log('cant addd cordovalib to the classpath' + stderr);
+				process.exit(1);
+			} else {
+				console.log("added cordovalib to the path:");
+			}
+		});
+				
+		exec(addToClassPath2, function (error, stdout, stderr) {
+			console.log(stdout);
+			if (stderr != "") {
+				console.log('cant add facebooklib to the classpath ' + stderr);
+				process.exit(1);
+			} else {
+				console.log("added facebooklib to the path:");
+			}
+
+		});
+	}
+	callback();
+
+}
+
+function installFacebookPlugin() {
+	installPlugin( "dev-tools//local_plugins_repo//com.phonegap.plugins.facebookconnect --variable APP_ID=\"731640560179788\" --variable APP_NAME=\"Reviyou\"");
+}
+
+function installDevicePlugin() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.device");
+}
+
+function installOauthioPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//com.oauthio.plugins.oauthio");
+}
+function installInAppBrowser() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.inappbrowser");
+}
+
+function installSplashscreenPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.splashscreen");
+}
+function installSpinnerPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//it.mobimentum.phonegapspinnerplugin");
+}
+function installNetworkPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.network-information");
+}
+function installDialogsPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.dialogs");
+}
+function installStatusBarPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//org.apache.cordova.statusbar");
+}
+function installGAPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//com.danielcwilson.plugins.googleanalytics");
+}
+function installLaunchmyappPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//nl.x-services.plugins.launchmyapp --variable URL_SCHEME=reviyou");
+}
+
+function installIonicKeyboardPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//com.ionic.keyboard");
+}
+
+
+function installSocialSharingPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//nl.x-services.plugins.socialsharing");
+}
+
+function installNotificationsPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//com.phonegap.plugins.PushPlugin");
+}
+function installMediaPlugin() {
+	installPlugin("dev-tools//local_plugins_repo//cordova-plugin-media");
+}
+
+function installPluginFile() {
+	installPlugin("dev-tools//local_plugins_repo//cordova-plugin-file");
+}
+
+
+
+
+function installPlugin(plug) {
+	console.log("add plugin " + plug);
+	exec("cordova -d plugin add " + plug, function (error, stdout, stderr) {
+		console.log(stdout);
+		if (stderr != "") {
+			console.log('stderr3 ' + stderr);
+			process.exit(1);
+		}
+		callback();
+		
+	})
+}
+
+
+
+function sleep(time) {
+    var stop = new Date().getTime();
+    while(new Date().getTime() < stop + time) {
+        ;
+    }
+}
+
+//executes next command(for async list of commands)
+function callback() {
+    if (actions.length) {
+        actions.shift()();
+    } else {
+        console.log("030 after hook  is Done");
+    }
+}
+	

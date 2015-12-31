@@ -1,0 +1,13 @@
+	<div ng-controller="QuickSearchCtrl">
+		<form ng-submit="quickSearch()">
+			<!--http://ionicframework.com/docs/components/#input-icons
+			<i class="icon ion-ios7-search placeholder-icon"></i>
+			-->
+			<input ng-model="quickSearchString" type="search" placeholder="Search" class="input-control input-simple topbar-search" maxlength="50" />
+			<!--
+			<i style=" font-size: 18px;" class="clear-search icon ion-ios7-close-empty" ng-click="alert('todo:clearme')"></i>
+-->
+			
+			<input class="hidden" type="submit" />
+		</form>
+	</div>

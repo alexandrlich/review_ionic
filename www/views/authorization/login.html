@@ -1,0 +1,46 @@
+<ion-view  cache-view="true"  hide-back-button="true">
+<div class="login-page">
+	<div class="logo-login-holder">
+		<div class="logo-login">RY</div>
+	</div>
+	<div class="login-btn-wrapper">
+		<div class="login-btn-holder" >
+		
+			<div ng-if="showSignInPage()">
+					
+				<div class="padding">
+					<label class="item item-input">
+						<input ng-model="signInObj.email" type="text" placeholder="Email">
+					</label>	
+					<label class="item item-input">
+						<input ng-model="signInObj.password" type="password" placeholder="Password">
+					</label>
+					
+				</div>
+				
+			
+				<button class="btn btn-login btn-ry" type="button" ng-click="signIn()">Signs In</button>
+				<div class="row">
+				  <div class="col col-50"><a class="btn btn-login btn-nav" ng-click="forgotPassword()">Reset</a></div>
+				  <div class="col col-50"><a class="btn btn-login btn-nav" ng-click="goToMainLogin()">Social Login</a></div>			
+				</div>
+				
+			</div>
+			<div ng-if="showMainLoginPage()">
+				
+				<div class="row">
+				  <div class="col col-50"><a class="btn btn-login btn-nav" ng-click="signUp()">Sign Up</a></div>
+				  <div class="col col-50"><a class="btn btn-login btn-nav" ng-click="goToReviyouSignIn()">Sign In</a></div>			
+				</div>
+				
+				
+				<button class="btn btn-login btn-fb" type="button" ng-click="login('facebook')">Login with Facebook</button>
+				<button class="btn btn-login btn-gp" type="button" ng-click="login('google')">Login with Google</button>
+				<button class="btn btn-login btn-tw" type="button" ng-click="login('twitter')">Login with Twitter</button>
+				
+			</div>
+		</div>
+	</div>
+</div>
+<div class="bg-login"></div>
+</ion-view> 

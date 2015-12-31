@@ -1,0 +1,34 @@
+// should probably be removed, why do we need it? How would it work after ionic upgrade/ alex
+
+// .view-container {
+// 	top: 0;
+// 	left: 0;
+// }
+
+// .bar-header {
+// 	height: auto !important;
+// }
+
+ion-side-menu {
+	ion-content {
+		top: 0;
+		.scroll {
+			position: absolute;
+			top: 0;
+			left: 0;
+			height: 100%;
+			width: 100%;
+		}
+	}
+}
+
+.pane, .view {
+	background-color: @wrapper_main;
+}
+
+
+// for righticon indent in topbar
+
+.bar .buttons.pull-right, .bar .title+.button:last-child, .bar .title+.buttons, .bar>.button+.button:last-child, .bar>.button.pull-right {
+	right: 10px;	
+}

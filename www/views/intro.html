@@ -1,0 +1,31 @@
+<ion-view  hide-back-button="true">
+<ion-nav-bar class="top-bar ">
+</ion-nav-bar>
+		<ion-nav-title>
+			<h1 class="title light">Intro</h1>
+		</ion-nav-title>	
+	      
+        <ion-nav-buttons side="left">
+          <button class="button button-light button-clear no-animation" 
+                  ng-click="previous(slideIndex)">
+            {{ (slideIndex>0) ? 'Previous' : 'Skip Intro'}}
+          </button>                             
+        </ion-nav-buttons>
+        
+        <ion-nav-buttons side="right"> 
+          <button class="button button-light button-clear no-animation" 
+                  ng-click="next(slideIndex)">
+            {{ (slideIndex==4) ? 'Go Reviyou':'Next'}}
+          </button>
+        </ion-nav-buttons>
+        
+        <ion-slide-box on-slide-changed="slideChanged(index)" show-pager="true">
+          <ion-slide><div class="rw-intro-slide slide1"></div></ion-slide>
+          <ion-slide><div class="rw-intro-slide slide2"></div></ion-slide>
+          <ion-slide><div class="rw-intro-slide slide3"></div></ion-slide>
+          <ion-slide><div class="rw-intro-slide slide4"></div></ion-slide>
+          <ion-slide><div class="rw-intro-slide slide5"></div></ion-slide>
+          
+        </ion-slide-box>
+   
+      </ion-view>

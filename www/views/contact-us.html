@@ -1,0 +1,43 @@
+<ion-view>
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button id="createProfileBtn" class="top-bar-btn open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-title>
+		<ng-include src="'views/top-bar/searchPartial.html'"></ng-include>			
+	</ion-nav-title>
+	<ion-nav-buttons side="right">
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>
+	</ion-nav-buttons>
+	
+
+<ion-content class="ion-content-block container-fluid " has-bouncing="false" scroll="false" ng-controller="ContactUsCtrl">
+	<div class="page page-contactus">
+		<h1 class="page-title">Contact Us</h1>
+		<div class="list">
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Problem
+				</div>
+				<select ng-model="problem.subject">
+					<option value="General question">General question</option>
+					<option value="Main question">Main question</option>
+					<option value="Secondary question">Secondary question</option>
+					<option value="Other question">Other question</option>
+				</select>
+			</label>	
+
+		<label class="item item-input">
+			<textarea type="text" placeholder="Description" ng-model="problem.description"></textarea>
+		</label>
+		</div>
+		<button  class="rw-button rw-button-purple rw-button-icon icon-envelope"  ng-click="submitForm()">Contact</button>
+		
+	</div>
+</ion-content>
+</ion-view>

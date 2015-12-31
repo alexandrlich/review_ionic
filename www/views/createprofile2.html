@@ -1,0 +1,46 @@
+<ion-view ng-controller="CreateProfileCtrl">
+
+	<ion-nav-title>
+		<h1 class="title light">Create profile</h1>
+	</ion-nav-title>	
+	<ion-nav-buttons side="right">
+	<!--top-bar-btn top-bar-right-->
+		<button class="button button-clear button-light icon-right" ng-click="createProfile()">Create</button>
+	</ion-nav-buttons>
+
+
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false" scroll="false">
+
+<div class="page page-createprofile">
+
+	<div class="list">
+		<div class="item item-divider">
+			Fill out his professional info:
+		</div>
+		<label class="item item-input item-select">
+			<div class="input-label">
+				Position *
+			</div>
+			<select  ng-model="newProfile.jobs[0].occupation" name="position">
+				<option ng-repeat="profession in professions" ng-value="profession.profession_name">{{ profession.profession_name }}</option>
+			</select>
+		</label>
+		<label class="item item-input">
+			<input type="text" model="newProfile.jobs[0].companies[0].name"  placeholder="Company">
+		</label>
+
+		<label class="item item-input">
+			<span class="input-label">Date from:</span>
+			<input type="month" placeholder="mm/yyyy" max="12/2015" ng-model="newProfile.jobs[0].start_date" />
+		</label>  
+		<label class="item item-input">
+			<span class="input-label">Date till:</span>
+			<input type="month" placeholder="mm/yyyy" max="12/2015" ng-model="newProfile.jobs[0].end_date" />
+		</label>
+	</div>
+
+	<button class="rw-button rw-button-purple rw-button-icon icon-yes" ng-click="createProfile()">Create</button>
+</div>
+</ion-content>
+</ion-view>

@@ -1,0 +1,54 @@
+<ion-view ng-controller="AddJobCtrl">
+
+	<ion-nav-title>
+		<h1 class="title light">{{profile.isRequest ? 'Add Job Request' : 'Add Job'}}</h1>
+	</ion-nav-title>	
+	
+	
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false" scroll="false">
+	<div class="page page-addjob">
+		<!--
+		<h1 class="page-title">{{profile.isRequest ? 'Leave your request to add more info' : 'Add Job to the current profile'}}</h1>-->
+		<div class="list">
+			<div class="item item-divider">
+				Professional info
+			</div>
+
+			<label class="item item-input item-select">
+				<div class="input-label">
+					Position *
+				</div>
+				<select ng-model="jobData.occupation">
+					<option ng-repeat="profession in professions" ng-value="profession.profession_name">{{ profession.profession_name }}</option>
+				</select>
+			</label>
+
+			<label class="item item-input">
+				<input type="text" placeholder="company"  ng-model="jobData.company_name" />
+			</label>
+
+			<label class="item item-input">
+				<span class="input-label">Date from:</span>
+				  <input type="number" placeholder="yyyyy" ng-model="jobData.start_date">
+				  <!--
+				<input type="month" placeholder="mm/yyyyy" ng-model="jobData.start_date" />
+				-->
+			</label>  
+			<label class="item item-input">
+				<span class="input-label">Date till:</span>
+				 <input type="number" placeholder="yyyyy" ng-model="jobData.end_date">
+				 <!--
+				 <input type="month" placeholder="mm/yyyyy" ng-model="jobData.end_date" />
+				 -->
+			</label>
+		</div>
+				
+				
+		<button class="rw-button rw-button-purple rw-button-icon" 
+		ng-class="{'icon-envelope': isRequest,' icon-yes': !isRequest}" type="button"  ng-click="addJob()">
+		{{ isRequest ? 'Request job addition' : 'Add'}}</button>
+	
+	</div>
+</ion-content>
+</ion-view>

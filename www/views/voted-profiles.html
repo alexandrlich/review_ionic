@@ -1,0 +1,78 @@
+<ion-view  cache-view="false"   hide-back-button="true">
+ 
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn open-menu">menu</button>
+	</ion-nav-buttons>
+
+
+	<ion-nav-title>
+		<h1 class="title light">Your Voted Profiles</h1>
+	</ion-nav-title>
+	<ion-nav-buttons side="right">
+		<a  ng-if="newNotificationsCount>0" class="top-bar-btn item-new-counter" ui-sref="tabs.notifications">{{newNotificationsCount}}</a>
+	</ion-nav-buttons>
+	
+<ion-content has-bouncing="false" class="ion-content-block container-fluid">
+<div class="page page-bookmarks">
+	<div  class="text-center"  ng-if="noResults">
+		You have not voted for any profile yet.
+	</div>
+				
+	<div class="items-list profiles-list">			
+	<ion-list show-delete="false" show-reorder="false">
+
+        <ion-item ng-repeat="b in votedProfiles" 
+                  item="b" class="item-remove-animate">
+		  
+		  <div class="rw-item profile-item theme-{{ b.theme_name }}">
+			<div class=" profile-item-holder">
+				<a class="profile-picture-wrapper" ui-sref="tabs.profile({id:b.id})">
+					<div class="profile-picture">
+						<profilepic src="{{b.url | imageTrust}}" initials="{{ b.initials }}" keep-ratio="false" />
+					</div>
+				</a>
+				
+				<!--change logic to first load profile and then do routing for the better UI experience -->
+				<a class="profile-info-wrapper" ui-sref="tabs.profile({id:b.id})">
+					<div class="profile-info">
+						<div class="profile-name">{{b.name}}</div>
+						<div class="profile-profession">
+							<div class="profile-profession-name">{{ b.last_job.occupation }}</div>
+							<!-- it should not be here!!! insted we should show average rank!! 
+							<div class="profile-profession-company">{{ popular.last_job.company }}</div>
+							-->
+							<div  class="profile-profession-company">{{ b.general_average_rank}}% General rate </div>
+							<div>You voted for this profile</div>
+						</div>
+					</div>
+				</a>
+				
+				<div class="profile-voted-status" ng-click="remove(b)">
+					<span class="ion-close-round"/>
+					<!-- ion-ios-close-empty-->
+				</div>
+				
+				
+			</div>			
+
+			</div>
+
+                  
+        </ion-item>
+
+      </ion-list>
+	</div>
+      
+   <ion-infinite-scroll
+    ng-if="moreDataCanBeLoaded"
+    on-infinite="loadMore()"
+    distance="1%">
+  </ion-infinite-scroll>
+				
+				
+
+</div>
+
+
+</ion-content>
+</ion-view>

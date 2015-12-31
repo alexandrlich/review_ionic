@@ -1,0 +1,228 @@
+<!doctype html>
+
+<html ng-app="reviyouMobileApp" ng-strict-di>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<title></title>
+	<meta name="description" content="">
+	<meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+	<!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+	<link href="lib/ionic/css/ionic.css" rel="stylesheet">
+	
+	<!--don't remove comment below- it's used by gulp script to minify and compress -->
+	<!-- build:css -->
+	
+	<link rel="stylesheet" href="css/main.css">
+	
+	<!-- endbuild -->
+	
+	
+	<script src="lib/ionic/js/ionic.bundle.js"></script>
+	<!--todo: does it need to be here really? oauth? cordova_plugins should handle it  -->
+	<script src="oauth.js"></script>
+	<script src="cordova.js"></script>
+	<script src="cordova_plugins.js"></script>
+	
+</head>
+<body class="{{ bodyClass }}" ng-controller="TopBarCtrl">
+	
+
+<ion-nav-view animation="slide-left-right"></ion-nav-view> 
+
+<!--bootstrap angualr AFTER device is ready, not before -->
+<script>
+ //confirm('breakpoint');   
+
+/*
+this is a function to bypass login page for ionic serve command only. should not be used for mobile!
+*/
+
+function addUserForWebServe(){
+			var user = {
+				isLoggedIn: true,
+				token: "testtoken",
+				userId: "111111112222222233333333",
+				userData: {
+					showname: 'Andy Mayers',
+					terms_signed: false,
+					user_image_url: 'https://api.reviyou.com/api/1.2.2/image/default.pic',
+					login_provider: 'twitter', //could be twitter\facebook\gmail
+					tags: ["tv", "tv1","music"],
+					email: "andymayers15@gmail.com"
+					
+				}
+			}
+	user.timestamp = new Date().getTime();
+	window.localStorage.setItem( 'reviyou_login', JSON.stringify(user));
+	
+	window.location = "#/blank/main";
+	
+	
+}/**/
+//don't enable for mobile build
+//addUserForWebServe();
+
+
+	/*when you login\logout and click on the external link - this method(handleOpenReviyouURL) is called twice for ios
+		In order to solve it - we use our flag here
+		
+		todo: long term find out why it happens and fix
+	*/	
+	var handleOpenFired = false;
+	function handleOpenURL(url) {
+					 
+		if(!handleOpenFired) {
+			handleOpenFired=true;
+		
+			setTimeout(function() {
+				handleOpenReviyouURL(url)
+				handleOpenFired = false;
+					
+			}, 400);
+		}
+	}
+
+	function handleOpenReviyouURL(url) {
+		    		
+		  if(url.length==34 && url.substring(0, 10) === 'reviyou://') {
+			  //console.log('handleOpenReviyouURL ' + url);
+        		//since we use ionic we can't do window.location and put flag to the storage and check when angular&ionic are ready			
+				//if app was not launched - use local storage with a flag
+				//window.localStorage.setItem("external_load", url.substring(10,34));
+				//if app wa launched - use location change
+				if(typeof(analytics) != 'undefined') analytics.trackEvent('Share', 'Opened', 'urlProfileId', url.substring(10,34));
+				//console.log('redirect');
+				window.location = "#/tab/profile/"+url.substring(10,34);
+		  } 
+	}
+	
+	        	// handle APNS notifications for iOS
+            function onNotificationAPN(e) {
+                //alert('onNotificationAPN');
+                if (e.alert) {
+                	 // showing an alert also requires the org.apache.cordova.dialogs plugin
+                     navigator.notification.alert(e.alert);
+                }
+                    
+                if (e.sound) {
+                    // playing a sound also requires the org.apache.cordova.media plugin
+                    //TODO: move to angular and use utils method which takes settings into the account
+                    var snd = new Media(e.sound);
+                    snd.play();
+                }
+                //TODO: figure out how to call this service from index.html!
+                //and maybe redirect to opened notifications feed?
+                if (e.badge) {
+                		//TODO: find out why it's always not defined
+                		//pushNotification.setApplicationIconBadgeNumber(successHandler, e.badge);						
+                }
+                window.location = "#/tab/notifications";
+
+            }
+            
+            //rename to onNotificationAndroid
+            function onAndroidNotification(e) {
+                try {
+	                var controllerElement = document.querySelector('body');
+				
+	                var elem = angular.element(controllerElement);
+				    var injector = elem.injector();
+			
+				    var pns = injector.get('pushNotificationsProvider');
+				
+				    pns.onNotificationAndroid(e);
+				
+				    elem.scope().$apply();
+                } catch(ex) {
+                   console.log("Error handling android notification event: " + ex)
+                }
+
+            }
+            
+            //timeout because we need to wait for angular to initialize
+            //Dima -remove for real case - this is just to test withour device the approach
+            //setTimeout(function(){ test(); }, 3000);
+		 
+
+</script>
+
+
+
+<script src="lib/angular-route/angular-route.js"></script>
+
+<!--don't remove comment below- it's used by gulp script to minify and compress -->
+<!-- build:js -->
+<script src="js/app.js"></script>
+<script src="js/services/utils.js"></script>
+<script src="js/services/error-interceptor.js"></script>
+<script src="js/services/push-notifications.js"></script>
+<script src="js/services/run.js"></script>
+<script src="js/services/config.js"></script>
+<script src="js/services/appconfig.js"></script>
+
+
+<script src="js/services/user.js"></script>
+<script src="js/controllers/main.js"></script>
+<script src="js/controllers/intro.js"></script>
+<script src="js/controllers/add-tags.js"></script>
+<script src="js/controllers/view-selected-tags.js"></script>
+<script src="js/controllers/main-menu.js"></script>
+<script src="js/controllers/login.js"></script>
+<script src="js/controllers/terms.js"></script>
+<script src="js/controllers/votepage.js"></script>
+<script src="js/controllers/create-profile.js"></script>
+<script src="js/controllers/settings.js"></script>
+<!--
+<script src="js/controllers/news.js"></script>
+<script src="js/controllers/news-article.js"></script>
+<script src="js/services/news-provider.js"></script>
+-->
+<script src="js/controllers/comment.js"></script>
+<script src="js/controllers/quick-search.js"></script>
+<script src="js/services/authorization/fb-auth.js"></script>
+<script src="js/services/authorization/google-auth.js"></script>
+<script src="js/services/authorization/authorization-service.js"></script>
+<script src="js/services/authorization/signup-service.js"></script>
+<script src="js/services/authorization/twitter-auth.js"></script>
+<script src="js/services/authorization/reviyou-auth.js"></script>
+<script src="js/controllers/search.js"></script>
+<script src="js/controllers/top-bar.js"></script>
+<script src="js/controllers/quick-search.js"></script>
+<script src="js/services/default-provider.js"></script>
+<script src="js/services/search-provider.js"></script>
+<script src="js/services/tags-provider.js"></script>
+<script src="js/controllers/profile.js"></script>
+<script src="js/services/profile-provider.js"></script>
+<script src="js/services/comment-provider.js"></script>
+<script src="js/directives/main-menu.js"></script>
+<script src="js/filters/image-trust.js"></script>
+<script src="js/directives/profile-img.js"></script>
+<script src="js/directives/focus-me.js"></script>
+<script src="js/directives/err-src.js"></script>
+<script src="js/services/device-info.js"></script>
+<script src="js/services/request-provider.js"></script>
+<script src="js/services/user-provider.js"></script>
+<script src="js/services/contact-provider.js"></script>
+<script src="js/services/notifications-provider.js"></script>
+<script src="js/services/bookmark-provider.js"></script>
+<script src="js/services/vote-provider.js"></script>
+<script src="js/services/spinner.js"></script>
+
+<script src="js/controllers/bookmarks.js"></script>
+<script src="js/controllers/voted-profiles.js"></script>
+<script src="js/controllers/notifications.js"></script>
+<script src="js/controllers/error-page.js"></script>
+
+<script src="js/controllers/contact-us.js"></script>
+<script src="js/controllers/add-job-popup.js"></script>
+<script src="js/controllers/add-skill-popup.js"></script>
+<script src="js/services/skill-provider.js"></script>
+<script src="js/services/profession-provider.js"></script>
+<script src="js/controllers/popular.js"></script>
+<script src="js/services/popular-provider.js"></script>
+<!-- endbuild -->
+
+</body>
+</html>
+	

@@ -1,0 +1,2581 @@
+@charset "utf-8";
+
+@import "variables.less";
+
+@import "buttons.less";
+@import "inputs.less";
+@import "icons.less";
+
+@import "themes.less";
+
+@import "helvetica.less";
+
+@import "ionic-fixes.less";
+
+
+/* ionic popup */
+
+
+.popup-head {
+  padding: 10px 10px;
+}
+.popup-container .popup {
+	border-radius: 5px;
+	
+}
+.popup-buttons {
+	  min-height: 55px;
+}
+.popup-buttons .button {
+	min-height: 35px;
+}
+.popup-body {
+	text-align: center;
+}
+/* end of ionic popup */
+
+
+/* helper styles */
+
+.clearfix() {
+	zoom: 1;
+	&:after {content: ''; display: table; clear: both;}
+}
+
+.pull-left {
+	float: left;
+}
+
+.pull-right {
+	float: right;
+}
+
+.trs(@tr){
+	transition: all @tr ease-out;
+	-o-transition: all @tr ease-out;
+	-moz-transition: all @tr ease-out;
+	-webkit-transition: all @tr ease-out;
+	-khtml-transition: all @tr ease-out;
+}
+
+.transition(@prop, @tr) {
+	transition: @prop @tr ease-out;
+	-o-transition: @prop @tr ease-out;
+	-moz-transition: @prop @tr ease-out;
+	-webkit-transition: @prop @tr ease-out;
+	-khtml-transition: @prop @tr ease-out;
+}
+
+.box-sizing(@value: border-box) {
+	box-sizing: @value;
+	-moz-box-sizing: @value;
+	-webkit-box-sizing: @value;
+}
+
+.gradient(@color1, @color2, @position: top) {
+	background-color: (@color1+@color2)/2;
+	background-image: linear-gradient(@position, @color1 0, @color2 100%);
+	background-image: -o-linear-gradient(@position, @color1 0, @color2 100%);
+	background-image: -moz-linear-gradient(@position, @color1 0, @color2 100%);
+	background-image: -webkit-linear-gradient(@position, @color1 0, @color2 100%);
+	background-image: -ms-linear-gradient(@position, @color1 0, @color2 100%);
+}
+
+.vertical-align(@position: middle) {
+	font-size: 0;
+	> * {
+		display: inline-block;
+		font-size: @font-size;
+	}
+	&:before {
+		content: '';
+		height: 100%;
+		display: inline-block;
+	}
+	> *, &:before {
+		vertical-align: @position;
+	}
+}
+
+
+.transform(@arguments){
+	-webkit-transform: @arguments;
+	-moz-transform: @arguments;
+	-ms-transform: @arguments;
+	-o-transform: @arguments;
+	transform: @arguments;	
+}
+
+// helper styles
+
+.horizontal(@rules) {
+	@media (orientation: landscape) {
+		@rules();
+	}
+}
+
+.vertical(@rules) {
+	@media (orientation: portrait) {
+		@rules();
+	}
+}
+
+.text-left {
+	text-align: left;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.text-center {
+	text-align: center;
+}
+
+ul, li {
+	list-style: none;
+}
+
+img {
+	max-width: 100%;
+}
+
+*, *:focus {
+	outline: none;
+}
+
+.hwa {
+	// hardware acceleration, uncomment to enable
+	// -webkit-transform: scale3d(1,1,1);
+}
+
+.hidden {
+	display: none !important;
+}
+
+/* media queryies */
+
+.tablet(@rules) {
+	@media (min-width: 600px) {
+		@rules();
+	}
+}
+
+.medium(@rules) {
+	@media (min-width: 992px) {
+		@rules();
+	}
+}
+
+.large(@rules) {
+	@media (min-width: 1200px) {
+		@rules();
+	}
+}
+
+/******************************************* layout *******************************************/
+
+html {
+	position: relative;
+	height: 100%;
+	font-size: @font-size;
+}
+
+/* Space out content a bit */
+
+/* we should remove it. we are trying to cancel it out in ionic-fixes, this is double bad copy-paste(alex)
+body {
+	padding-top: 20px;
+	padding-bottom: 20px;
+	-webkit-transition: 0.5s ease-in-out;
+	background: @wrapper_main;
+	min-height: 100%;
+	.clearfix();
+	font-family: @font-family;
+}
+*/
+
+/* Main marketing message and sign up button */
+.jumbotron {
+	text-align: center;
+	border-bottom: 1px solid #e5e5e5;
+	.btn {
+		font-size: 21px;
+		padding: 14px 24px;
+	}
+}
+/* Supporting marketing content */
+.marketing {
+	margin: 40px 0;
+	p + h4 {
+		margin-top: 28px;
+	}
+}
+/* Responsive: Portrait tablets and up */
+@media screen and (min-width: 768px) {
+	/* Remove the padding we set earlier */
+	.header,
+	.marketing,
+	.footer {
+		padding-left: 0;
+		padding-right: 0;
+	}
+	/* Space out the masthead */
+	.header {
+		margin-bottom: 30px;
+	}
+	/* Remove the bottom border on the jumbotron for visual effect */
+	.jumbotron {
+		border-bottom: 0;
+	}
+}
+
+
+.lighter {
+	color: @color_subdark;
+}
+
+// forms
+
+.form-item {
+	// margin-bottom: 10px;
+	display: table;
+	width: 100%;
+	table-layout: fixed;
+	
+	margin: 0;
+	padding-bottom: @indent;
+	box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15), 0 1px 0 #fff;
+	&:last-child {
+		padding-bottom: 0;
+		box-shadow: none;
+	}
+	.item-label {
+		display: table-cell;
+		width: 42%;
+		vertical-align: middle;
+		label {
+			font-weight: normal;
+		}
+		.label-legeng {
+			color: @color_subdark;
+			font-size: .85em;
+		}
+		& + .input-holder {
+			width: 58%;
+			display: table-cell;
+			vertical-align: middle;
+		}
+		& + .input-multiple-holder {
+			width: 58%;
+			display: table-cell;
+			vertical-align: middle;
+		}	
+	}
+	.input-multiple-holder {
+		.item-label {
+			font-size: .9em;
+			width: 30%;
+		}
+		.input-multiple {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+		}
+		.input-single {
+			// display: table-cell;
+			display: block;
+			vertical-align: middle;
+			width: 100%;
+			&:last-child {
+				padding-left: @indent;
+			}
+			.input-single-holder {
+				display: table;
+				width: 100%;
+				table-layout: fixed;
+				.item-label {
+					width: 30%;
+				}
+				.input-holder {
+					width: 70%;
+					input {
+						display: inline-block;
+						width: 100%;
+						&::-webkit-date-and-time-value {
+							display: inline-block;
+						}
+					}
+				}
+			}
+		}
+	}
+}
+
+.form-group {
+	text-align: left;
+}
+
+
+
+// sidebar panel
+//TODO: REVISIT!
+.main-menu {
+/*todo: why not just background-color?????(alex) */
+
+	background-image: url(../images/menu_bg.png);
+	color: #fff;
+  /* alex - looks like we don't need it
+	width: 100%;
+	height: 100%;
+	//position: absolute;
+	//top: 0;
+	box-shadow: inset -15px 0 15px rgba(0,0,0,.2);
+	//Vitalii send to remove this border
+	//border-right: 3px solid #a1a1a1;
+	overflow-y: scroll;
+	z-index: 999;
+	.trs(.2s);
+	.hwa();
+	//.tablet({
+	//	width: 40%;
+	//	left: -40%;
+	//});
+	// body.menu-open & {
+	// 	left: 0;
+	// }
+	*/
+	.main-menu-holder {
+		//position: relative;
+		//min-height: 100%;
+		.platform-ios & {
+			padding-top: 20px;
+		}
+	}
+	.main-menu-items {
+		padding: 0 0 0px;
+		margin: 0 auto;
+		width: 85%;
+		list-style-type: none;
+		[class^="main-menu-item-"], [class*=" main-menu-item-"] {
+			border-top: 1px solid #241a20;
+			border-bottom: 1px solid #2d2c2b;
+			font-size: 1em;
+			line-height: 2;
+			display: block;
+			padding: @indent @indent;
+			position: relative;
+			a {
+				font-weight: inherit;
+				color: inherit;
+				text-decoration: inherit;
+				display: block;
+				padding-left: 2.5em;
+				.item-new-counter {//almost the same for .top-bar a.top-bar-btn.item-new-counter
+					position: absolute;
+					height: 1.6em;
+					top: 0;
+					bottom: 0;
+					right: 0;
+					margin: auto;
+					display: block;
+					font-size: .86em;
+					line-height: 1.6em;
+					color: @color_light;
+					background: @color_highlight;
+					border-radius: 10px;
+					padding: 0 10px;
+				}
+				.item-selected-counter {
+				  position: absolute;
+				  height: 1.6em;
+				  top: 0;
+				  bottom: 0;
+				  right: 0;
+				  margin: auto;
+				  font-size: .86em;
+				  line-height: 1.6em;
+				  color: @color_light;
+				  border: 1px solid #5A5A5A;
+				  border-radius: 10px;
+				  padding: 0 10px;
+				}
+
+				
+			}
+			
+			&:before {
+				content: '';
+				display: block;
+				float: left;
+				width: 2em;
+				height: 2em;
+				background: url(../images/menu_icons/home.svg);
+				background-size: 100% 100%;
+			}
+			
+			&.main-menu-item-home:before {
+				background: url(../images/menu_icons/home.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-bookmarks:before {
+				background: url(../images/menu_icons/bookmarks.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-popular:before {
+				background: url(../images/menu_icons/popular.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-news:before {
+				background: url(../images/menu_icons/news.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-contact:before {
+				background: url(../images/menu_icons/contact.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-agreement:before {
+				background: url(../images/menu_icons/agreement.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-notifications:before {
+				background: url(../images/menu_icons/notification.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-settings:before {
+				background: url(../images/menu_icons/settings.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-like:before {
+				background: url(../images/menu_icons/like.svg);
+				background-size: 100% 100%;
+			}
+			&.main-menu-item-tips:before {
+				background: url(../images/menu_icons/tips.svg);
+				background-size: 100% 100%;
+			}			
+		}
+	}
+	
+	.rw-button-logout {
+		position: absolute;
+		margin: 0 auto;
+		margin-top:30px;
+		padding: 5px 15px;
+		//bottom works bad on small devices
+		//bottom: 6vw;
+		left: 0;
+		right: 0;
+		width: 45vw !important;
+		display: block;
+		// height: 32px;
+		// line-height: 32px;
+		.tablet({
+			width: 30vw !important;
+		});
+	}
+	
+	
+	.main-menu-profile-info {
+		font-size: 0;
+		width: 90%;
+		margin: 0 auto;
+		* {
+			display: inline-block;
+			vertical-align: middle;
+		}
+		.main-menu-info {
+			text-align: left;
+			max-width: calc(~"100% - 90px");
+		}
+		/*old interests
+		.main-menu-tags {
+		   display: block;
+		
+		  font-size: 1rem;
+		  margin-left: 100px;
+		  color: #9d6eaa;//#9d6eaa;
+		  font-weight: bold;
+		  margin-bottom: 5px;
+		  overflow: hidden;
+		  width: 100%;
+		  text-overflow: ellipsis;
+		  
+		  a {
+			    color: inherit;
+				text-decoration: inherit;
+				
+				.menu-item-counter {
+				  height: 1.6em;
+				  margin: auto;
+				  font-size: .86em;
+				  line-height: 1.6em;
+				  color: #ffffff;
+				  background: #5242BD;//#864896;
+				  border-radius: 10px;
+				  padding: 0 10px;
+				}
+
+		  }
+		  
+		}*/
+		.main-menu-name {
+			display: block;
+			font-size: 1.6rem;
+			margin-left: 20px;
+			color: #9d6eaa;
+			font-weight: bold;
+			// word-wrap: break-word;
+			line-height: 1.2;
+			margin-bottom: @indent_mini;
+			overflow: hidden;
+			width: 100%;
+			text-overflow: ellipsis;
+		}
+		.main-menu-email {
+			display: block;
+			font-size: 1.2rem;
+			margin-left: 20px;
+			color: @color_light;
+			font-weight: normal;
+			word-wrap: break-word;
+		}
+		
+		.main-menu-photo {
+			width: 80px;
+			height: 80px;
+			margin: 10px auto;
+			border-radius: 50%;
+			text-align: center;
+			line-height: 80px;
+			overflow: hidden;
+			> img {
+				width: 80px;
+				height: 80px;
+				border-radius: inherit;
+				border: 10px solid rgba(134, 72, 150, 0.45);
+			}
+		}
+	}
+}
+
+.menu-closer {
+	// .trs(2s);
+	display: block;
+	height: 100%;
+	width: 0;
+	position: fixed;
+	left: 0;
+	top: 0;
+	background: rgba(0,0,0,0);
+	body.menu-open & {
+		// display: block;
+		width: 100%;
+		height: 100%;
+		background: rgba(0,0,0,.5);
+		z-index: 998;
+	}
+}
+
+/*I don't think we need it anymore, do we?(alex
+.main-wrapper {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+}*/
+
+.main-container {
+	overflow: hidden;
+	// float: left;
+	width: 100%;
+	min-height: 100%;
+	height: auto;
+	position: absolute;
+	top: 0;
+	left: 0;
+	// z-index: 1;
+	// .hwa();
+}
+
+/* why do we need it? looks like it breaks ionic
+.has-header {
+	top: 0 !important;
+}
+*/
+
+
+
+.container-fluid {
+	overflow-y: scroll;
+	// padding: @topbar-height 15px 0;
+	padding: @indent @indent_sides 0;
+	top: @topbar-height;
+	/* .container-login & {
+		 overflow-y: visible;
+	 }*/
+
+	&.container-fluid-popular {
+	  padding-top: 0px;
+	  top: 44px;
+	  &:before {
+		height: 0px !important;
+		}
+	}
+
+	
+	// since we don't use our top bar separately we don't need it anymore(alex)
+	.platform-ios & {
+		//padding-top: calc(~"4em + 20px");
+	}
+	.container-popular &, .container-profile & {
+		//temp disable to integration with ionic
+		//-webkit-overflow-scrolling: touch;
+		&:before {
+			content: '';
+			display: block;
+			height: @topbar-height;
+			top: 0;
+			left: 0;
+			width: 100%;
+			z-index: -1;
+			position: fixed;
+			z-index: 101;
+			// since we don't use our top bar separately we don't need it anymore(alex)
+			.platform-ios & {
+				//height: calc(~"4em + 20px");
+			}
+		}
+	}
+	[class^="has-popup-"] &, [class*=" has-popup-"] & {
+		-webkit-overflow-scrolling: auto !important;
+	}
+}
+
+.container-fluid-inside {
+	top: @topbar-height;
+	padding: @indent 0 0;
+	.platform-ios & {
+		//height: calc(~"4em + 20px");
+	}
+}
+
+/*TODO: what do we need .popup for? it's not been used
+I renamed .popup to .rypopu to avoid conflicts with ionic(alex)
+*/
+.rypopup {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: none;
+	display: none;
+	z-index: 100;
+	overflow-y: scroll;
+	-webkit-overflow-scrolling: none;
+	/*do we need this one? what for? */
+	.has-popup-main & {
+		top: @topbar-height;
+		height: calc(~"100% - @topbar-height");
+	}
+	/*don't need it anymore since we use ionic modal
+	.has-popup-vote & {
+		z-index: 105;
+	}*/
+	&.popup-open {
+		display: block;
+	}
+	
+	.vote-popup {
+		background: #2c143e;
+		background: rgba(44, 20, 62, 0.95);
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		min-height: 100%;
+		.vote-title, .vote-result-title {
+			color: #fff;
+			text-align: center;
+		}
+		.vote-title {
+			margin-top: 10%;
+		}
+		.vote-variant-container {
+			text-align: center;
+			overflow: hidden;
+			margin-top: 15%;
+			margin-bottom: 10%;
+			line-height: 0;
+			font-size: 0;
+			margin-left: auto;
+			margin-right: auto;
+			.tablet({
+				width: 70%;
+				margin-top: 15%;
+			});
+			.vote-variant {
+				display: inline-block;
+				.box-sizing();
+				color: #fff;
+				border-radius: 50%;
+				border: 2px solid #b960ec;
+				background: rgba(0, 0, 0, .37);
+				text-align: center;
+				width: 21vw;
+				height: 21vw;
+				line-height: 21vw;
+				margin: 0 4vw 7vw;
+				.tablet({
+					width: 14vw;
+					height: 14vw;
+					margin: 0 3vw 3vw;
+					line-height: 10vw;
+					padding: 2vw;
+				});
+				.vote-variant-text {
+					font-size: 40px;
+					// line-height: 20vw;
+					font-weight: 300;
+					.tablet({
+						width: 10vw;
+					});
+				}
+				&.active {
+					background: #7e5397;
+					font-size: 0;
+				}
+			}
+		}
+	}
+	
+	.holder-close-popup {
+		position: absolute;
+		bottom: 6vw;
+		left: 0;
+		width: 100%;
+		display: block;
+		text-align: center;
+		.button-close-popup {
+			width: 50vw;
+			display: block;
+			margin: 0 auto;
+			font-size: 15px;
+			line-height: 1.2;
+		}
+	}
+}
+
+
+// .feedback-form .ng-invalid-required.ng-dirty {
+// 	border-color: #ff0027;
+// }
+
+// login page
+
+.logo-login-holder {
+	position: relative;
+	// top: 1.8em;
+	top: 0;
+	left: 0;
+	padding-top: 20%; // increase this val to move logo down
+	width: 100%;
+	z-index: 1;
+}
+
+.logo-login {
+	background: url(../images/logo.png) 50% 50% no-repeat;
+	background-size: 100%;
+	text-indent: -9999px;
+	width: 50%;
+	height: 0;
+	padding-bottom: 67%;
+	margin: 0 auto;
+	max-width: 300px; // limit for tablets
+}
+
+.login-btn-holder {
+	background: url(../images/form.svg) 50% 100% no-repeat;
+	background-size: 100% auto;
+	margin: 0 auto;
+	width: 79%;
+	max-width: 420px;
+	text-align: center;
+	box-sizing: border-box;
+	padding: 30% 8px 2% 8px;
+}
+
+.login-btn-wrapper {
+	position: absolute;
+	bottom: 4%;
+	left: 0;
+	width: 100%;
+	z-index: 1;
+	
+	& label{
+		background-color:rgba(87, 2, 113, 0.19);
+		border: 1px solid rgba(197, 74, 184, 0.38);
+		
+	}
+	& input{
+		height: 20px;
+		color: #cfdae8;
+	}
+}
+
+.btn.btn-login {
+	display: block;
+	width: 100%;
+	margin-top: 7px;
+	color: #fff;
+	position: relative;
+	font-size: 14px;
+	line-height: 1.42857143;
+	background-image: none;
+	border: 1px solid transparent;
+	border-radius: 4px;
+	padding: 4px 12px 4px 32px;
+	&:before {
+		content: '';
+		background-position: 50% 50%;
+		background-size: 100% 100%;
+		display: block;
+		width: 22px;
+		height: 100%;
+		position: absolute;
+		top: 0;
+		left: 10px;
+	}
+	&.btn-fb {
+		background: #4769a5;
+		&:before {
+			background: url(../images/icons/facebook.svg) 50% 50%;
+			background-size: 100% 100%;
+		}
+	}
+	&.btn-gp {
+		background: #f55e4d;
+		&:before {
+			background: url(../images/icons/google.svg) 50% 50%;
+			background-size: 100% 100%;
+		}
+	}
+	&.btn-tw {
+		background: #65ccef;
+		&:before {
+			background: url(../images/icons/twitter.svg) 50% 50%;
+			background-size: 100% 100%;
+		}
+	}
+	&.btn-ry {
+		background: rgba(40, 112, 201, 0.74);
+		padding: 4px 12px 4px 12px;
+		margin-top: 0px;
+	
+
+	}	
+	&.btn-nav {
+		background: rgba(78, 9, 100, 0.53);
+		padding: 4px 12px 4px 12px;
+		font-size: 12px;
+		margin-top: 0px;
+	
+
+	}	
+}
+
+.bg-login {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	background: url(../images/BG_full_HD_vertical.jpg) 50% 50% no-repeat;
+	background-size: cover;
+	z-index: 0;	
+}
+
+// view profile page
+
+/// topbar
+
+
+.top-bar {
+	.clearfix();
+	width: 100%;
+	position: fixed;
+	z-index: 102;
+	top: 0;
+	left: 0;
+	//disabled since otherwise ion-nav-bar title doesn't work properly
+	//display: block;
+	padding: 5px 10px;
+	background: #2c1b52;
+	
+	a.top-bar-btn.item-new-counter {//almost the same for .main-menu .main-menu-items [class^="main-menu-item-"] a .item-new-counter,
+		  //position: absolute;
+		  height: 1.6em;
+		  //top: 0;
+		  //bottom: 0;
+		  //right: 0;
+		  margin: auto;
+		  //display: block;
+		  //font-size: .86em;
+		  line-height: 1.6em;
+		  //color: #ffffff;
+		  background: #864896;
+		  border-radius: 10px;
+		  padding: 0 10px;
+		  
+		  text-indent: 0px;
+		  color:white;
+		  text-decoration:none;
+	}
+	
+	
+	.container-login & {
+		display: none;
+	}
+	//.platform-ios & {
+	//	top: 20px;
+	//}
+	.platform-ios & {
+		//make exptra space on top for ios system time etc(like in foursquare)
+		
+		//we don't need top-bottom padding since it conflicts with nav bar of ionic which is positioned perfectly by default
+		//padding: 1.5em @indent_sides 1em @indent_sides;
+		// padding: 5px @indent_sides 0 @indent_sides;
+		// padding: 5px 10px;
+
+	}
+	.platform-android & {
+		//we don't need top-bottom padding since it conflicts with nav bar of ionic which is positioned perfectly by default
+		//padding: 1em @indent_sides;
+		// padding: 5px @indent_sides 0;
+		// padding: 5px 10px;
+	}	
+	.has-popup-main &, .has-popup-success-feedback & {
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: #2c1b52;
+		z-index: 102;
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			left: 0;
+			width: 100%;
+			height: @topbar-height;
+			background: #2c1b52;
+		}
+	}
+	
+	// .top-bar-search {
+	// 	width: 47%;
+	// 	margin: 0 auto;
+	// 	.container-profile & {
+	// 		width: 47%;
+	// 	}
+	// 	// padding: @indent_middle 0;
+	// }
+	
+	input[type="search"].topbar-search {
+		display: block;
+		//width: 100%;
+		border: none;
+		border-radius: 6px;
+		// font-size: 1.15em;
+		// line-height: 1.7;
+		line-height: 30px;
+		height: 30px;
+		.box-sizing();
+		padding: 0 0 0 15px;
+		// margin: 0;
+		font-size: 15px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		// z-index: 1;
+		// .trs(.2s);
+		// &:focus {
+		// 	width: 100/47*100%;
+		// 	margin-left: (100 - 100/47*100)/2%;
+		// }
+		// padding: @indent_middle 0;
+	}
+	
+	.top-bar-search .input-control {
+		/***********
+		display: block;
+		//width: 100%;
+		border: none;
+		border-radius: 6px;
+		font-size: 1.15em;
+		// line-height: 1.7;
+		line-height: 30px;
+		height: 30px;
+		.box-sizing();
+		padding: 0 0 0 15px;
+		margin: 0;
+		position: relative;
+		// z-index: 1;
+		.trs(.2s);
+		&:focus {
+			width: 100/47*100%;
+			margin-left: (100 - 100/47*100)/2%;
+		}
+		*/
+	}
+	
+	.logo {
+		background: url(../images/logo_small.png) 50% 50% no-repeat;
+		background-size: 100% auto;
+		position: relative;
+		width: 6.83em;
+		height: 2em;
+		text-align: center;
+		margin: 0 auto 0;
+		bottom: -.3em;
+	}
+	
+	.top-bar-left {
+		//left: @indent_sides;//adding just that makes button almost not clicable even thought it's visible just fine(alex)
+		// ???
+		// position: absolute;
+		// height: 30px;
+		// top: 0;
+		// bottom: 0;
+		// margin: auto;
+		// * {
+		// 	display: inline-block;
+		// }
+	}
+/*ionic code takes care of what we need, this class breaks our icons(alex)
+	.top-bar-right {
+		right: @indent_sides;
+		position: absolute;
+		height: 30px;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		* {
+			display: inline-block;
+		}
+	}
+*/
+//currently not used since we use default ionic styling and cross platform icons
+	.top-bar-btn {
+		display: inline-block;
+		text-indent: -9999px;
+		border: none;
+		background: none;
+		height: 34px;
+		width: 28px;
+		background-position: 50% 50%;
+		background-repeat: no-repeat;
+		outline: none;
+		max-width: 32px;
+		
+		.platform-ios &  {
+			//since we added space for top bar to show system time we need to position images on the same level as input
+			margin-bottom: 10px;
+		}
+		
+		& + .top-bar-btn {
+			margin-left: @indent_mini;
+		}
+		&.open-menu {
+			background-image: url(../images/icons/list.svg);
+			background-size: 100% auto;
+		}
+		&.open-popup-profile {
+			background-image: url(../images/icons/create.svg);
+			background-size: 86% auto;
+		}
+		&.share-profile {
+			background-image: url(../images/icons/share.svg);
+			background-size: 100% auto;
+		}
+		&.button-back {
+			background-image: url(../images/icons/back.svg);
+			background-size: 86% auto;
+		}
+		/*not used
+		&.button-close-red {
+			background-image: url(../images/icons/delete.svg);
+			background-size: 86% auto;
+		}
+		&.button-close {
+			background-image: url(../images/icons/no.svg);
+			background-size: 86% auto;
+		}*/
+		&.button-ok {
+			background-image: url(../images/icons/yes.svg);
+			background-size: 86% auto;
+		}
+	}
+	//for all non profile top bars changing dynamically from js
+	&.theme-none {
+		background: #2c1b52;
+		border-color:#2c1b52
+	}
+}
+
+
+
+//real problem with focus+scroll+fixed layout for ios
+//not used since ionic addresses this problem
+//	.top-bar-search-ios{position:absolute !important;}
+
+
+.page-view-profile {
+	// -webkit-overflow-scrolling: touch;
+	// position: relative;
+	// height: 100%;
+	// overflow-y: scroll;
+	// padding-left: @indent_sides;
+	// padding-right: @indent_sides;
+	// margin-left: -@indent_sides;
+	// margin-right: -@indent_sides;
+	
+	.profile-tags-section {
+	    padding-top: 5px;
+	
+		.profile-tag {
+			  padding: 5px 5px;
+			  font-size: 10px;
+			  margin-left: 3px;
+			  margin-top: 2px;
+			  
+			  box-sizing: border-box;
+			  -moz-box-sizing: border-box;
+			  -webkit-box-sizing: border-box;
+			  border-radius: 18px;
+			  color: #fff;
+			  line-height: normal;
+			  border: none;
+			  text-decoration: none;
+			  text-align: center;
+			  min-width: 20px;
+			  min-height: 20px;
+		  
+		  
+		}
+	}
+	
+	
+	
+	.profile-header {
+		.tablet({
+			padding-left: 60px;
+			padding-right: 60px;
+		});
+		margin: -@topbar-height -@indent_sides @indent_large;
+		color: #fff;
+		padding: @topbar-height @indent_sides @indent;
+		box-shadow: 0 2px 6px 2px rgba(0,0,0,.5);
+		.clearfix();
+		
+		margin-top: -@indent;
+		padding-top: 0;
+		
+		.profile-top-info {
+			text-align: center;
+			display: table;
+			table-layout: fixed;
+			margin: 0 auto @indent;
+			width: 100%;
+			.profile-name-holder {
+				display: table-cell;
+				// max-width: 90%;
+				vertical-align: middle;
+				.profile-name {
+					color: #fff;
+					font-size: 1.7em;
+					line-height: 1.5;
+					font-weight: bold;
+				}
+				.profile-email {
+					font-size: 1em;
+					max-width: 100%;
+					margin: 0 auto;
+					overflow: hidden;
+					text-overflow: ellipsis;
+				}
+			}
+			.progile-share-holder {
+				display: table-cell;
+				padding: 0 @indent_mini;
+				vertical-align: middle;
+				line-height: 0;
+				font-size: 2em;
+				// * {
+				// 	display: block;
+				// }
+			}
+			
+		}
+		
+		
+		.profile-stats {
+			display: table;
+			width: 100%;
+			.profile-picture-wrapper {
+				display: table-cell;
+				width: 41%;
+				vertical-align: middle;
+				font-size: 16vw;
+				.tablet({
+					width: 28%;
+					font-size: 6vw;
+				});
+				.profile-picture {
+					display: inline-block;
+					width: 100%;
+					border-radius: 50%;
+					.box-sizing();
+					border: 1px solid @color_light;
+					padding: @indent;
+					position: relative;
+					img {
+						border-radius: inherit;
+						width:100%;
+					}
+					.no-photo {
+						border-radius: inherit;
+						width: 100%;
+						// height: 100%;
+						height: 0;
+						padding-bottom: 100%;
+						position: relative;
+						display: block;
+						color: @color_light;
+						.letters {
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							display: block;
+							margin: auto;
+							width: 100%;
+							text-align: center;
+							font-weight: bold;
+							height: 1em;
+							line-height: 1;
+							text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+						}
+					}
+				}
+			}
+
+
+			.profile-header-buttons-wrapper {
+				display: table-cell;
+				width: 59%;
+				padding-left: @indent;
+				vertical-align: middle;
+				text-align: right;
+				.tablet({
+					padding: 0 20px;
+				});
+				.profile-header-buttons {
+					display: inline-block;
+					padding: 0;
+					width: 100%;
+					.box-sizing();
+					.button {
+						margin-bottom: @indent;
+						margin-left: auto;
+						margin-right: auto;
+						&.profile-button-follow {
+							margin-bottom: 0;
+						}
+					}
+				}
+			}
+		}
+			
+			
+		.profile-rate {
+			text-align: center;
+			.profile-rate-value, .profile-rate-sign {
+				font-size: 2.4em;
+				line-height: 100%;
+				font-weight: bold;
+				text-shadow: -5px 2px 10px rgba(0,0,0,.3);
+			}
+			
+			sub {
+				bottom: 0;
+				margin-left: @indent_tiny;
+				font-size: 1em;
+			}
+
+			.profile-rate-text {
+				display: block;
+				font-style: italic;
+				font-size: 1.1em;
+				margin-bottom: @indent_mini;
+				text-shadow: -5px 2px 10px rgba(0,0,0,.3);
+				text-transform: capitalize;
+			}
+		}
+	}
+	.profile-jobs {
+		.list {
+			.item {
+				border-color: #C84FD0;
+				border:none;
+				padding: 0px;
+				white-space: normal;	
+				&.item-stable {
+					color: #5A48FF;
+					&.active {
+						 background-color: #CFBFFF;
+					}
+				}
+				
+				&.item-accordion  {
+				 	line-height: 38px;
+				 	padding-top: 0;
+				 	padding-bottom: 0;
+				 	transition: 0.09s all linear;	
+				 	&.ng-hide {
+					   line-height: 0px;	
+				 	}
+				 	&.ng-hide-add, &.ng-hide-remove {
+					 	  display: block !important;
+				 	}				
+				}		
+			}
+		}		
+	}
+
+	.profile-items-list {
+		padding: 0;
+		margin: 0;
+		position: relative;
+		.item {
+			background-color: transparent;
+			border-width: 0px;
+			padding:0px;
+			margin:0px;
+			white-space: normal;	
+				
+			
+			.profile-item {
+				// .clearfix();
+				padding: @indent_mini;
+				border-bottom: 1px solid rgba(0, 0, 0, .15);
+				border-top: 1px solid #fff;
+				display: table;
+				width: 100%;
+				position: relative;
+				table-layout: fixed;
+				
+			
+			}
+			
+			&:first-child {
+				border-top: none;
+			}
+			&:last-child {
+				border-bottom: none;
+			}
+			> *:first-child {
+				margin-top: 0;
+			}			
+		}
+		
+	}
+
+	.profile-skills-item {
+		.profile-skills-vote {
+			display: table-cell;
+			vertical-align: middle;
+			text-align: right;
+			width: 100%;
+			.button {
+				padding-right: 30px;
+				padding-left: 30px;
+			}
+		}
+		.profile-skills-prop {
+			display: table-cell;
+			vertical-align: middle;
+			line-height: 1.2em;
+			font-size: 1.1em;
+			padding-right: @indent;
+			width: 100%;
+			.skill-rate {
+				font-size: 1.4em;
+				line-height: 1;
+				sub {
+					bottom: 0;
+					color: @color_subdark;
+					font-size: .7em;
+					margin-left: @indent_tiny;
+				}
+			}
+		}
+	}
+
+	// profile-comments
+
+	.profile-leave-comment {
+		margin: @indent 0;
+		.profile-leave-comment-textarea {
+			margin-bottom: @indent;
+		}
+		// don't need it anymore looks like
+		&:after {
+			content: '';
+			display: block;
+			width: 100%;
+			height: 1px;
+			border-top: 1px solid rgba(0, 0, 0, .15);
+			border-bottom: 1px solid #fff;
+			margin-top: @indent_middle;
+		}
+	}
+
+		.item {
+			.profile-comment-content {
+				p {
+					margin: 0;
+					display: block;
+					width: 100%;
+					word-wrap: break-word;
+					white-space: normal
+				}
+			}
+		}
+		.profile-comment-stats {
+			position: relative;
+			// padding-left: 14%;
+			padding-left: 14vw;
+			min-height: 13vw;
+			.clearfix();
+			.profile-comment-avatar-holder {
+				// width: 12%;
+				// padding-bottom: 14%;
+				width: 12vw;
+				height: 12vw;
+				.box-sizing();
+				top: 0;
+				position: absolute;
+				left: 0;
+				img {
+					position: absolute;
+					top: 0;
+					left: 0;
+					width: 100%;
+					height: 100%;
+					border: 4px solid #bca1c5;
+					border-radius: 100%;
+				}
+			}
+			.profile-comment-name {
+				
+			}
+			.profile-comment-date {
+				color: @color_subdark;
+			}
+		}
+		.profile-comment-delete {
+			border: none;
+			padding: 0;
+			margin: 0;
+			font-size: 2em;
+			height: 1.2em;
+			width: 1.2em;
+			line-height: 1;
+			background: none;
+			position: absolute;
+			top: 0;
+			right: 0;
+			color: @color_subdark;
+		}
+		.profile-comment-buttons {
+			padding-top: @indent;
+			.rw-button {
+				// padding-left: 8px;
+				// padding-right: 8px;
+				padding-left: 0;
+				padding-right: 0;
+				width: 6em;
+				font-size: .65em;
+			}
+		}
+	
+	.button-more-comments, .button-less-comments {
+		display: block;
+		width: 100%;
+		text-align: center;
+		background: none;
+		padding: 0;
+		border: none;
+		color: @color_highlight;
+		font-size: 1.2em;
+		margin: @indent_large 0;
+		&:after {
+			content: url(../images/icons/more.svg);
+			vertical-align: -23%;
+			margin-left: @indent;
+			width: 12px;
+			height: 23px;
+			display: inline-block;
+		}
+		&.button-less-comments:after {
+			content: url(../images/icons/less.svg);
+		}
+	}
+}
+	
+/* ionic is smart enough to do all that so commenting out(alex)
+.profile-delete-buttons {
+	text-align: center;
+	.button {
+		min-width: 80%;
+		margin: 0 auto;
+		width: auto;
+	}
+}*/
+//end of profile comments
+
+
+
+.section {
+	margin-bottom: @indent_large;
+}
+
+
+.section-heading {
+	position: relative;
+	z-index: 1;
+	popup & {
+		margin-bottom: @indent_mini;
+	}
+	&, * {
+		color: @color_highlight;
+	}
+	&:after {
+		content: '';
+		display: block;
+		width: 100%;
+		height: 1px;
+		position: absolute;
+		top: 0;
+		bottom: 0;
+		margin: auto;
+		border-top: 1px solid rgba(0, 0, 0, .15);
+		border-bottom: 1px solid #fff;
+		z-index: -1;
+	}
+	h1, h2, h3, h4, h5 {
+		display: inline-block;
+		background: @wrapper_main;
+		padding: 0 @indent 0 0;
+		margin: 0;
+		font-size: 1.5em;
+		.rypopup & {
+			font-size: 1.35em;
+		}
+	}
+	.button-heading {
+		background: @wrapper_main;
+		border: none;
+		margin: 0;
+		color: @color_sublight;
+		position: relative;
+		padding: 0 @indent 0 0;
+		&.button-profile-addto:after {
+			content: url(../images/icons/plus.svg);
+			display: inline-block;
+			vertical-align: middle;
+			margin-left: 3px;
+		}
+	}
+}
+
+// popular
+
+.items-list {
+	padding: 0;
+	padding: 0;
+	margin: 0;
+	
+	margin-left: -@indent_sides;
+	margin-right: -@indent_sides;
+	
+	.item{
+	    //border-style: none;
+	    &:first-child {
+			border-top: none;
+		}
+	}
+	.rw-item {
+		.clearfix();
+		padding: @indent_mini @indent_mini @indent_mini @indent_sides;
+		border-bottom: 1px solid rgba(0, 0, 0, .15);
+		border-top: 1px solid #fff;
+		&:first-child {
+			border-top: none;
+		}
+		&:last-child {
+			border-bottom: none;
+		}
+		> *:first-child {
+			margin-top: 0;
+		}
+	}
+	
+	.item-content {
+    	background-color: #fafafa;
+
+	}
+}
+
+
+.items-list {
+	// width: 100%; 
+	margin-left: -15px;
+	margin-right: -15px;
+}
+//.items-list .profile-item {
+//	padding-left: 25px;
+//}
+
+.button-load-more, .button-load-less {
+	display: block;
+	width: 100%;
+	text-align: center;
+	background: none;
+	padding: 0;
+	border: none;
+	color: @color_highlight;
+	font-size: 1.2em;
+	margin: @indent_large 0;
+	.clearfix();
+	&:after {
+		content: url(../images/icons/more.svg);
+		vertical-align: -23%;
+		margin-left: @indent;
+		width: 12px;
+		height: 23px;
+		display: inline-block;
+	}
+	&.button-load-less:after {
+		content: url(../images/icons/less.svg);
+	}
+}
+
+.page {
+	//why do we need those paddings? why is it duplicated for ipad below?
+	//padding-top: calc(~"4em +"@indent);
+	//padding-bottom: @indent;
+	
+	&:before {
+		content: '';
+		display: block;
+		height: @topbar-height;
+		// position: absolute;
+		top: 0;
+		left: 0;
+		//width: 100%;
+		
+		//background: #2c1b52;
+		z-index: -1;
+		position: fixed;
+		z-index: 101;
+		.page-popular & {
+			display: none;
+		}
+		//TODO:add comments why do we need this for ipad?
+		//.platform-ios & {
+			//height: calc(~"4em + 20px");
+		//}
+	}
+	/*only use for popular and terms, in other places use sticky ionic subheader */
+	.page-title {
+		display: block;
+		width: auto;
+		margin: @indent -@indent_sides @indent_large;
+		padding: 0;
+		text-align: center;
+		font-weight: normal;
+		font-size: 1.3em;
+		box-shadow: 0 1px 0 0 #fff;
+		border-bottom: 1px solid rgba(0, 0, 0, .15);
+		padding-bottom: @indent;
+	}
+}
+
+.page-bookmarks {
+	.profile-button-follow {
+		font-size: .9em;
+	}
+}
+
+.page-terms {
+	padding: @indent 0;
+	.agreement-buttons-block {
+		.button {
+			margin-top: @indent;
+		}
+	}
+}
+
+.page-contact {
+	padding: @indent 0;
+}
+.page-signUp {
+	background: #E6E9ED;
+	input {
+	  border: 1px solid #C4BCC7;//#8c529b;
+	  background-color: rgba(161, 165, 163, 0.13);
+	  color: #2c1b52;
+	  padding: 10px;
+	  -webkit-border-radius: 5px; -moz-border-radius: 5px; border-radius: 5px;
+	}	
+}
+
+.page-error {
+	text-align: center;
+	.vertical-align();
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	padding: 0 @indent_sides;
+	.box-sizing();
+	/*we don't need it anymore(alex)
+	&:after {
+		content: '';
+		display: block;
+		height: @topbar-height;
+		position: absolute;
+		top: 0;
+		left: 0;
+		width: 100%;
+		background: #2c1b52;
+		z-index: -1;
+		font-size: 14px;
+	}*/
+	.page-error-holder {
+		font-size: 14px;
+		padding-top: 2em;
+		.main-text {
+			color: @color_highlight;
+			margin: 0 0 @indent;
+			font-size: 1rem;
+			line-height: auto;
+			.error-image {
+				display: inline-block;
+				width: 123px;
+				height: 112px;
+				background-image: url(../images/error_image.png);
+				background-repeat: no-repeat;
+				background-position: 50% 50%;
+				max-width: 90%;
+				background-size: contain;
+			}
+			h1 {
+				text-transform: uppercase;
+				font-weight: bold;
+				margin: @indent 0 0;
+			}
+			h3 {
+				margin: 0;
+			}
+		}
+	}
+}
+.page-settings {
+	.item-toggle {
+		white-space: normal;
+	}
+}
+
+.page-popular {
+	//temp disable to integrate with ionic
+	//-webkit-overflow-scrolling: touch;
+	position: relative;
+	height: 100%;
+	overflow-y: scroll;
+	padding-left: @indent_sides;
+	padding-right: @indent_sides;
+	margin-left: -@indent_sides;
+	margin-right: -@indent_sides;
+
+	.popular-subheader {
+	  display: block;
+	  width: auto;
+	  padding: 0;
+	  text-align: center;
+	  font-weight: normal;
+	  font-size: 1.3em;
+	  //border-bottom: 1px solid #F4F4F4;
+	  
+	  background-color: rgba(204, 204, 204, 0.2);
+	  margin-left: -@indent_sides;
+	  margin-right: -@indent_sides;
+	  
+	  .wide-as-needed {
+		   overflow-x:scroll;
+		   white-space: nowrap;
+			::-webkit-scrollbar { //hide h scroll
+			    display: none; 
+			}
+
+		}
+
+	  
+	  .button:after {
+		  /* position: absolute; */
+		   top: 0px; 
+		   right: 0px; 
+		   bottom: 0px; 
+		   left: 0px; 
+		}
+	  
+	  .tag-container {
+			padding: 0 5px;
+			border-top-left-radius: 10px;
+			border-top-right-radius: 10px;
+			border-bottom-width: 0px;
+			display: inline-block;
+			&.tag-selected {
+				background-color: #FAFAFA;			
+				.button {
+					border-bottom: 3px solid #864896;
+					border-top-width:0px;
+					border-left-width:0px;
+					border-right-width:0px;
+					font-size:105%;
+					background-color:#FAFAFA;
+				}
+			}
+			
+			.button {
+				min-height: 44px;
+				padding: 0;
+				margin: 0;
+				border-top-width:0px;
+				border-left-width:0px;
+				border-right-width:0px;
+				border-bottom-width:0px;
+				background-color:rgba(244, 244, 244, 0.2);
+				
+			}
+	  }
+	}
+}
+
+
+
+
+
+
+
+
+
+
+.profiles-list {
+	.profile-name {
+	  text-overflow: ellipsis;
+	  white-space: nowrap;
+	  overflow: hidden;
+	}	
+	//.profile-item {
+		.profile-item-holder {
+			display: table;
+			width: 100%;
+			table-layout: fixed;
+			.profile-picture-wrapper {
+				width: 18%;
+				display: table-cell;
+				vertical-align: middle;
+				font-size: 7vw;
+				
+				.tablet({
+					font-size: 4vw;
+				});
+				.profile-picture {
+					display: inline-block;
+					width: 100%;
+					border-radius: 50%;
+					border-width: 5px;
+					border-style: solid;
+					margin-right: @indent;
+					position: relative;
+					.no-photo {
+						border-radius: inherit;
+						width: 100%;
+						// height: 100%;
+						height: 0;
+						padding-bottom: 100%;
+						position: relative;
+						display: block;
+						color: @color_light;
+						.letters {
+							position: absolute;
+							top: 0;
+							bottom: 0;
+							display: block;
+							margin: auto;
+							width: 100%;
+							text-align: center;
+							font-weight: bold;
+							height: 1em;
+							line-height: 1;
+							text-shadow: 4px 4px 0 rgba(0, 0, 0, 0.4);
+						}
+					}
+					img {
+						border-radius: inherit;
+					}
+				}
+			}
+			.profile-info-wrapper {
+				display: table-cell;
+				vertical-align: middle;
+				padding-left: @indent;
+				.tablet({
+					padding-left: 40px;
+					font-size:200%;
+				});
+				.profile-info {
+					display: inline-block;
+					width: 100%;
+					line-height: 1.1;
+					color: @color_dark;
+					.profile-name {
+						
+					}
+					.profile-profession {
+						color: @color_subdark;
+					}
+				}
+			}
+			.profile-stats-wapper {
+				display: table-cell;
+				vertical-align: middle;
+				width: 35%;
+
+				.profile-stats  {
+					display: inline-block;
+					width: 100%;
+					.tablet({
+						font-size:140%;
+					});
+					.profile-rate {
+						display: block;
+						text-align: center;
+						box-shadow: 0 1px 0 0 #fff;
+						border-bottom: 1px solid rgba(0, 0, 0, .15);
+						font-size: 2em;
+						line-height: 1;
+						padding-bottom: @indent_tiny;
+						color: @color_highlight;
+						.profile-rate-value {
+							// font-weight: bold;
+						}
+						.profile-rate-sign {
+							// font-weight: normal;
+						}
+					}
+					.profile-additional-stats {
+						.clearfix();
+						padding-top: @indent_tiny;
+						padding-right: @indent;
+						.profile-messages, .profile-views {
+							width: 50%;
+							float: left;
+							text-align: center;
+							color: @color_subdark;
+							font-size: .9em;
+							white-space: nowrap;
+							&:after {
+								content: '';
+								background-position: 50% 50%;
+								background-size: 100% 100%;
+								display: inline-block;
+								width: 1em;
+								height: 1em;
+								position: relative;
+								top: 0;
+								left: 0;
+								vertical-align: -12%;
+							}
+						}
+						.profile-views {
+							&:after {
+								background-image: url(../images/icons/eye.svg);
+							}
+						}
+						.profile-messages {
+							&:after {
+								background-image: url(../images/icons/speach.svg);
+							}
+						}
+					}
+				}
+			}
+			.profile-voted-status {
+				  display: table-cell;
+				  vertical-align: middle;
+				  text-align: center;
+				  width: 10%;
+				  padding-right: @indent;				
+			}
+			
+			.profile-bookmark-status, {
+				display: table-cell;
+				vertical-align: middle;
+				text-align: center;
+				width: 38%;
+				padding-right: @indent;
+				.button {
+					line-height: 1.4em;
+					box-shadow: none;
+					font-size: .9em;
+					display: inline-block;
+					width: auto;
+					padding-right: 8px;
+					padding-left: 26px;
+					&:before {
+						width: 20px;
+						height: 64%;
+						top: 18%;
+						left: 4px;
+					}
+				}
+			}
+		}
+//	}
+
+	.item,.item-content {
+    	padding: 0px;
+    	background-color: transparent;
+    	white-space: normal;
+	}
+}
+
+// .default-popup {
+// 	background: #2c1b52;
+// }
+
+/*removing at least for now since new ionic design has white background and no padding for popups
+.default-popup {
+	background: #e9eaeb;
+	position: relative;
+	margin-top: 0;
+	left: 0;
+	width: 100%;
+	// min-height: calc(~"100% - @topbar-height");
+	min-height: 100%;
+	padding: @indent @indent_sides;
+}*/
+
+// .popup-open ~ top-bar {
+// 	position: fixed;
+// 	width: 100%;
+// 	z-index: 99;
+// }
+
+// .popup-open:before {
+// 	content: '';
+// 	display: block;
+// 	position: absolute;
+// 	top: 0;
+// 	left: 0;
+// 	width: 100%;
+// 	height: @topbar-height;
+// 	background: rgba(44, 27, 82, 1);
+// 	z-index: -1;
+// }
+
+// delete profile popup
+
+/*no longed used since we moved to ionic confirms.
+See if we want to make ionic confirm cooler with some of the attributes from this style below
+ionic components provide cssClass attribute where you can add your custom class
+.confirm-popup {
+	background: rgba(0,0,0,.8);
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	text-align: center;
+	color: @color_light;
+	.vertical-align();
+	.confirm-holder {
+		margin-top: -50px;
+	}
+	.main-header {
+		margin: 0 0 @indent;
+		font-size: 34px;
+	}
+	.secondary-header {
+		margin: @indent_large;
+		font-size: 22px;
+	}
+	.confirm-buttons {
+		width: 90%;
+		margin: 0 auto;
+		.clearfix();
+		.button-holder {
+			width: 50%;
+			padding: 0 @indent_mini;
+			float: left;
+			.button {
+				line-height: 1.46;
+				font-size: 16px;
+				&.btn-cls {
+					background-color: rgba(0, 0, 0, .8);
+					border: 1px solid #fff;
+				}
+				&.btn-cfm {
+					background-color: #f00;
+					border: 1px solid #f00;
+				}
+			}
+		}
+	}
+}
+*/
+// modal popup
+
+.modal-popup {
+	background: rgba(0,0,0,.8);
+	position: absolute;
+	width: 100%;
+	height: calc(~"100% - @topbar-height");
+	left: 0;
+	top: @topbar-height;
+	text-align: center;
+	.vertical-align();
+	font-size: 14px;
+	.modal-holder {
+		font-size: 14px;
+		background: @wrapper_main;
+		border-radius: @border-radius;
+		border: 2px solid @color_highlight;
+		padding: @indent @indent_middle;
+		margin-top: -4em;
+		position: relative;
+		top: -20px;
+		min-width: 76vw;
+		.header-modal {
+			font-size: 1.4em;
+			color: @color_highlight;
+			margin-bottom: @indent_mini;
+		}
+		.content-block {
+			margin-bottom: @indent_middle;
+		}
+		.button-holder {
+			.button {
+				min-width: 80px;
+			}
+		}
+	}
+}
+
+
+// adduser popup
+
+.page-createprofile {
+	.profile-image-holder {
+		text-align: center;
+		.profile-image {
+			display: inline-block;
+			border-radius: 50%;
+			border: 5px solid #39543e;
+			background: #54b382;
+			width: 35vw;
+			height: 35vw;
+			text-align: center;
+			img {
+				border-radius: inherit;
+				width: 100%;
+				height: auto;
+			}
+		}
+		.legend {
+			color: @color_sublight;
+			font-size: .8em;
+			width: auto;
+			max-width: 80%;
+			margin: @indent_mini auto 0;
+			font-style: italic;
+			&.ng-invalid {
+			  color: #EB1E22;
+			}
+		}
+	}
+}
+
+.section-add-profile {
+	.section-heading {
+		h1, h2, h3, h4, h5 {
+			font-size: 1.3em;
+			line-height: 1.4em;
+		}
+	}
+}
+
+.add-profile-input-simle {
+	line-height: normal !important;
+}
+
+.add-profile-inputs {
+	.rw-item {
+		.clearfix();
+
+		.add-profile-tips {
+		  color: @color_sublight;
+		  font-size: .8em;
+		  margin: @indent_mini auto 0;
+		  font-style: italic;
+		}
+
+		.add-profile-label {
+			float: left;
+			width: 40%;
+			font-weight: normal;
+			&.ng-invalid {
+				color: #EB1E22;
+			}
+		}
+		.add-profile-input {
+			float: left;
+			width: 60%;
+			&.short-add-profile-input {
+			  width: 25%;
+			}
+		}
+		.add-profile-input-multiple {
+			.clearfix();
+			float: left;
+			width: 60%;
+			.input-left-holder, .input-right-holder {
+				// float: left;
+				width: 100%;
+				display: block;
+				.clearfix();
+				.add-profile-label {
+					width: 30%;
+					font-size: .8em;
+					line-height: 1.7em;
+				}
+				.add-profile-input {
+					line-height: 1;
+					width: 70%;
+				}
+			}
+			.input-right-holder {
+				// padding-left: @indent;
+			}
+		}
+	}
+}
+
+// addskill popup
+
+.topform-block {
+	&:after {
+		content: '';
+		display: block;
+		width: auto;
+		height: 1px; border-top: 1px solid rgba(0, 0, 0, .15);
+		border-bottom: 1px solid #fff;
+		margin-top: @indent_middle;
+		margin-bottom: @indent_middle;
+		margin-left: -@indent_sides;
+		margin-right: -@indent_sides;
+	}	
+}
+
+.bottomform-block {
+	text-align: center;
+	margin-top: @indent_middle;
+	.header-small {
+		font-size: .85em;
+		color: @color_subdark;
+	}
+
+	.header-big {
+		font-size: 1.1em;
+		padding-bottom: @indent_middle;
+	}
+}
+
+
+// search-page
+.item-input-inset .item-input-wrapper input {
+	width: 100%;
+}
+.page-search {
+	.block-createprofile {
+		text-align: center;
+		color: @color_dark;
+		text-decoration: inherit;
+		font-size: 1.1em;
+		.text-createprofile {
+			margin-bottom: @indent;
+		}
+		.button-createprofile {
+			display: inline-block;
+			width: auto;
+		}
+	}
+
+	.profile-goto-icon {
+		display: table-cell;
+		width: 10%;
+		vertical-align: middle;
+		.icon {
+			width: 100%;
+			height: 0;
+			padding-bottom: 100%;
+		}
+	}
+	
+	.search-line {
+		display: table;
+		width: 100%;
+		width: auto;
+		margin: @indent -@indent_sides @indent_large;
+		padding: 0 @indent_sides;
+		text-align: center;
+		font-weight: normal;
+		// font-size: 1.3em;
+		box-shadow: 0 1px 0 0 #fff;
+		border-bottom: 1px solid rgba(0, 0, 0, .15);
+		padding-bottom: @indent;
+		.search-block {
+			display: table-cell;
+			vertical-align: middle;
+			//what is this? wrong, commenting out(alex)
+			/*.ion-ios7-search {
+				//display: none;
+			}*/
+		
+
+		}
+		.button-block {
+			display: table-cell;
+			width: 1%;
+			vertical-align: middle;
+			padding-left: @indent;
+			.button {
+				line-height: 1.4em;
+				box-shadow: none;
+				font-size: .9em;
+				display: inline-block;
+				width: auto;
+				padding-right: 8px;
+				padding-left: 8px;
+				background: #8c529b;
+				margin-bottom: 0;
+			}
+		}
+	}
+	
+	.profiles-list {
+		.profile-item:last-child {
+			&:after {
+				content: '';
+				display: block;
+				// margin-top: @indent;
+				border-top: 1px solid rgba(0, 0, 0, .15);
+				border-bottom: 1px solid #fff;
+				margin: 5px -@indent_sides 0 -@indent_sides;
+			}
+		}
+	}
+}
+
+//tags page
+
+.page-tag {
+	.mytagcloud {
+	    float: left;
+	    margin: 5px;
+	    font-family: 'Reenie Beanie', arial, serif;
+	}
+	.descr-line {
+		color: #9F9F9F;
+	}
+
+	@-webkit-keyframes thumb {
+		0% { -webkit-transform: scale(1); }
+		50% { -webkit-transform: scale(0.9); }
+		100% { -webkit-transform: scale(1); }
+	}
+	.tagselected {
+		-webkit-animation-name: thumb;
+		-webkit-animation-duration: 200ms;
+		-webkit-transform-origin:50% 50%;
+		-webkit-animation-iteration-count: 2;
+		-webkit-animation-timing-function: linear;
+	}
+	
+	.search-line {
+	  display: table;
+	  width: 100%;
+	  //width: auto;
+	  //margin: 10px -25px 20px;
+	  //padding: 0 25px;
+	  text-align: center;
+	  font-weight: normal;
+	  box-shadow: 0 1px 0 0 #fff;
+	  border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+	  padding-bottom: 10px;
+	}
+	.tags-button { 
+		.rw-button {
+			margin:10px;
+			width:inherit;
+		}
+	}
+
+}
+
+.rwbar-header {
+	  box-sizing: border-box;
+	  padding: 5px;
+	  width: 100%;
+	  border-width: 0;
+	  border-style: solid;
+	  border-top: 1px solid transparent;
+	  border-bottom: 1px solid #ddd;
+	  /* border-width: 1px will actually create 2 device pixels on retina; */
+	  background-size: 0;
+	  background-color: #ddd;
+	  height: 35px;
+}
+
+
+// news page - deprecated
+//TODO:renamve news to notifications
+
+.page-news {
+	padding-bottom: @indent;
+	
+	.notification {
+	//or simply do white-space: normal; for item inside of page-news
+		white-space: normal;
+		padding-left: 40px;
+	 }
+
+	.news-item {
+		position: relative;
+		padding-left: 40px;
+		white-space: normal;
+		&:before {
+			content: '';
+			display: block;
+			position: absolute;
+			top: 0;
+			bottom: 0;
+			left: @indent;
+			width: 20px;
+			height: 20px;
+			margin: auto;
+			background: #8c529b;
+			border: 2px solid #603a6a;
+			border-radius: 50%;
+			.box-sizing();
+		}
+
+		.article-date {
+			font-style: italic;
+			color: @color_subdark;
+		}
+		&.disabled {
+			color: #898a8a !important;
+			&:before {
+				background: #898a8a;
+				border-color: #5d5e5e;
+			}
+		}
+	}
+}
+.fontSize08 {
+	font-size: .8em;
+}
+
+//intro box
+.slider {
+  height: 100%;
+}
+.slider-slide {
+  padding-top: 64px;
+  color: #000;
+  background-color: #fff;
+  text-align: center;
+
+  font-family: "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, "Lucida Grande", sans-serif; 
+  font-weight: 300;
+}
+
+.slide1 {
+  background: url(../images/intro/1.jpg) 100% 100% no-repeat;
+}
+.slide2 {
+  background: url(../images/intro/2.jpg) 100% 100% no-repeat;
+}
+.slide3 {
+  background: url(../images/intro/3.jpg) 100% 100% no-repeat;
+}
+.slide4 {
+  background: url(../images/intro/4.jpg) 100% 100% no-repeat;
+}
+.slide5 {
+  background: url(../images/intro/5.jpg) 100% 100% no-repeat;
+}
+.rw-intro-slide {
+  position: relative;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  margin: auto;
+  border: none;
+  height: 100%;
+  width: 100%;
+  text-indent: -9999px;
+  background-size: 100% 100%;	
+}
+
+
+/*
+.intro-fullscreen-image {
+  max-width: 100%;
+  max-height: 100%;
+  bottom: 0;
+  left: 0;
+  margin: auto;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+}*/
+//end of intro box
+
+.padding-top10 {
+	padding-top:10px;
+}
+
+.overflow-hidden {
+	overflow: hidden;
+}
+
+

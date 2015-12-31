@@ -1,0 +1,157 @@
+.rw-button-color(@btn_color, @box-shadow) {
+	background-color: @btn_color;
+	//without shadow it looks more modern
+	//box-shadow: 0 4px 0 @box-shadow;
+	&.rw-button-outline {
+		box-shadow: inset 0 0 0 1px @btn_color;
+		background: none;
+		color: @btn_color;
+	}
+}
+
+.rw-tag {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  border-radius: 14px;
+  color: #fff;
+  line-height: normal;
+  padding: 15px 20px;
+  border: none;
+  margin-bottom: 5px;
+  text-decoration: none;
+  text-align: center;
+  font-size: 16px;
+ 	
+ 	&.button {
+ 		&.icon, &.icon-right {
+	 		&:before {
+				content: '';
+				background-position: 50% 50%;
+				background-size: 100% 100%;
+				display: block;
+				width: 22px;
+				height: 100%;
+				position: absolute;
+				top: 0;
+				left: 15px;	 		
+	 		}
+ 		}
+	}
+	
+	&.rw-button-red {
+		.rw-button-color(#ff0000, #9e0909);
+	}
+	&.rw-button-purple {
+		.rw-button-color(#8c529b, #603a6a);
+	}
+	&.rw-button-blue {
+		.rw-button-color(#5a9bf5, #3d67a2);
+	}
+	&.rw-button-dark-blue {
+		//.rw-button-color(#xxx, #yyy);
+		background-color: #307AE0;
+	}
+	&.rw-button-light {
+		.rw-button-color(#ddd, #ddd);
+	}
+	&.rw-tag-selected {
+		background-color: #F55A7D
+   }
+ 
+}
+
+.rw-subtag {
+  padding: 5px 15px;
+  font-size: 12px;
+  margin-top: 10px;
+  margin-left: 3px;
+  .page-popular & {
+	  padding: 5px 15px;
+  }
+}
+
+.rw-button {
+	.box-sizing();
+	border-radius: @border-radius;
+	color: #fff;
+	// no need to do it for all buttons(alex)
+	line-height: normal;
+	padding: 8px 15px;
+	display: block;
+	width: 100%;
+	border: none;
+	margin-bottom: 4px;
+	text-decoration: none;
+	text-align: center;
+	min-height: 0;
+	// max-width: 360px;
+	&:hover {
+		color: #fff;
+	}
+	&.rw-button-inline {
+		display: inline-block;
+		width: auto;
+	}
+	&.rw-button-mini {
+		padding: @indent;
+	}
+	&.rw-button-red {
+		.rw-button-color(#ff0000, #9e0909);
+	}
+	&.rw-button-purple {
+		.rw-button-color(#8c529b, #603a6a);
+	}
+	&.rw-button-blue {
+		.rw-button-color(#5a9bf5, #3d67a2);
+	}
+	&.rw-button-light {
+		.rw-button-color(#ddd, #ddd);
+	}	
+	&.rw-button-disabled, &[disabled] {
+		.rw-button-color(#898a8a, #5d5e5e);
+	}
+	&.rw-button-yellow {
+		.rw-button-color(#fec900, #fec900);
+	}
+	&.rw-button-green {
+		.rw-button-color(#33cd5f, #33cd5f);
+	}
+	&.rw-button-light {
+		.rw-button-color(#ddd, #ddd);
+	}
+	&.rw-button-special {
+		background: #190f29;
+		border: 1px solid #b2afb7;
+	}
+	&.rw-button-compact {
+		padding-top: @indent_mini;
+		padding-bottom: @indent_mini;
+	}
+	
+	&.rw-button-icon {
+		position: relative;
+		padding-right: 26px;
+		padding-left: 40px;
+		&.rw-button-compact {
+			padding-right: 10px;
+			padding-left: 30px;
+			&:before {
+				left: 5px;
+				background-size: 80% 80%;
+				background-repeat: no-repeat;
+			}
+		}
+		&:before {
+			content: '';
+			background-position: 50% 50%;
+			background-size: 100% 100%;
+			display: block;
+			width: 22px;
+			height: 100%;
+			position: absolute;
+			top: 0;
+			left: 15px;
+		}
+	}
+}

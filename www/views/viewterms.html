@@ -1,0 +1,21 @@
+<ion-view ng-controller="TermsCtrl">
+
+	<ion-nav-buttons side="left">
+		<button menu-toggle="left" class="top-bar-btn top-bar-left open-menu">menu</button>
+	</ion-nav-buttons>
+	<!--disable profile creation for now
+	<ion-nav-buttons side="right">
+		<button  class="top-bar-btn top-bar-right open-popup-profile" ui-sref="tabs.profileCreate1">add</button>
+	</ion-nav-buttons>
+	-->
+	<ion-nav-title>
+		<h1 class="title light">Terms and Privacy</h1>
+	</ion-nav-title>
+	
+			  
+
+	<ion-content  class="ion-content-block container-fluid" has-bouncing="false">
+		<div data-ng-include src="'views/termsPartial.html'"></div>
+	</ion-content>
+
+</ion-view>

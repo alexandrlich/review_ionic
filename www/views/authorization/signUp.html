@@ -1,0 +1,32 @@
+<ion-view hide-back-button="false" cache-view="false" >
+
+	<ion-nav-bar class="top-bar ">
+		<ion-nav-back-button ng-click="previousView()">    
+		</ion-nav-back-button>	  	
+		<ion-nav-title>
+			<h1 class="title light">Sign Up</h1>
+		</ion-nav-title>
+	</ion-nav-bar> 
+	
+<ion-content class="ion-content-block page-signUp" has-bouncing="false" scroll="false">
+
+
+		<div class="row">
+			<div class="col item-input"><input ng-model="signUpObj.first_name" type="text" placeholder="First Name *"></div>
+			<div class="col item-input"><input ng-model="signUpObj.last_name" type="text" placeholder="Last Name *"></div>
+		</div>
+		<div class="row">
+			<div class="col item-input"><input ng-model="signUpObj.email" type="text" placeholder="Email *"></div>
+		</div>
+
+
+	  	<div class="row">
+			<div class="col item-input"><input ng-model="signUpObj.password" type="password" placeholder="Enter Password *"></div>
+			<div class="col item-input"><input ng-model="signUpObj.password_repeat" type="password" placeholder="Re-enter Password *"></div>
+		</div>
+
+		<div class="padding">
+	     <button class="rw-button rw-button-purple" ng-click="signUpSubmit()">Create Account</button>
+		 </div>
+</ion-content>
+</ion-view>

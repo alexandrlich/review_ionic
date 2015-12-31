@@ -1,0 +1,174 @@
+.input-holder {
+	position: relative;
+}
+
+/* needs to be revisited since condlicting with ionic */
+textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"], select {
+	&.input-control {
+		.box-sizing();
+		display: block;
+		width: 100%;
+		position: relative;
+		border-radius: @border-radius;
+		padding: 4px 5px 3px;
+		margin: 0;
+		border: none;
+		background: #fff;
+		box-shadow: inset 0 1px 0 1px rgba(0, 0, 0, .5);
+		border-bottom: 1px solid #f3f3f3;
+		//width: 100%;
+		outline: none;
+		//font-size: 1.15em;
+		line-height: 1.5;
+		&.input-simple {
+			box-shadow: none;
+		}
+		
+		/*From alex: it seems to be useful and makes not since since you can't click on it. We should just place a separate icon and redo this. see example here: http://codepen.io/ionic/pen/7c613967b1b0b4fed3ae866a5cf29519
+		&.has-clear {
+			padding-right: 0;
+			&::-webkit-search-cancel-button { 
+				-webkit-appearance: none; 
+				margin-right: 6px;
+			}
+
+			&::-webkit-search-cancel-button:after {
+				content: '';
+				display: block;
+				// position: absolute;
+				// top: 0;
+				// bottom: 0;
+				// margin: auto;
+				// right: 5px;
+				background: url(../images/icons/clear.svg) 50% 50% no-repeat;
+				border: none;
+				height: 22px;
+				width: 22px;
+				text-indent: -9999px;
+				background-size: 100% 100%;
+			}
+		}*/
+		&:focus {
+			outline: none;
+		}
+	}
+}
+
+.input-control-mask {
+	.box-sizing();
+	display: block;
+	position: relative;
+	padding: 4px 5px 3px;
+	margin: 0;
+	border: none;
+	width: 100%;
+	font-size: 1.15em;
+	line-height: 1.5;
+	overflow: hidden;
+	&:before {
+		content: '';
+		display: block;
+		width: 100%;
+		background: #fff;
+		box-shadow: inset 0 1px 0 1px rgba(0, 0, 0, .5);
+		border-radius: @border-radius;
+		position: relative;
+		z-index: -1;
+	}
+	&.native-text {
+		display: block;
+		font-weight: inherit;
+		line-height: inherit;
+		padding: 0;
+		margin: 0;
+		background: none;
+		&:before {
+			background: none;
+			box-shadow: none;
+		}
+		&:focus {
+			&:before {
+				background: rgba(255,255,255,.4);
+			}
+		}
+		* {
+			// line-height: inherit;
+		}
+	}
+	* {
+		outline: none;
+		// display: inline !important;
+		display: block;
+		width: 100%;
+		position: relative;
+		background: none;
+		border: none;
+		// font-size: .4em;
+		font-size: .8em;
+		line-height: 1;
+		font-weight: inherit;
+		height: 1.5em;
+		&::-webkit-date-and-time-value {
+			// display: none !important;
+			// -webkit-appearance: none;
+		}
+		&::-webkit-inner-spin-button, ::-webkit-calendar-picker-indicator {
+			display: none;
+			-webkit-appearance: none;
+		}
+	}
+}
+
+.input-native-text {
+	border: none;
+	color: inherit;
+	font-weight: inherit;
+	background: none;
+	line-height: inherit;
+	padding: 0;
+	margin: 0;
+	border-radius: @border-radius;
+	&:focus {
+		background: rgba(255,255,255,.4);
+	}
+}
+
+.input-clear {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	margin: auto;
+	right: 5px;
+	background: url(../images/icons/clear.svg) 50% 50% no-repeat;
+	border: none;
+	height: 22px;
+	width: 22px;
+	text-indent: -9999px;
+	background-size: 100% 100%;
+}
+
+.label-control {
+	font-weight: normal;
+	text-align: left;
+	line-height: 1;
+	display: block;
+	margin-bottom: @indent_mini;
+}
+
+// .form-complited {
+	.input-native-text {
+		&.input-error, &.ng-dirty.ng-invalid, &.ng-invalid-required {
+			box-shadow: 0 0 2px rgba(255, 0, 0, .9);
+		}
+	}
+	
+	.input-control {
+		&.input-error, &.ng-dirty.ng-invalid, &.ng-invalid-required {
+			box-shadow: inset 0 1px 0 1px rgba(0, 0, 0, .5), inset 0 0 2px rgba(255, 0, 0, .9);
+		}
+	}
+// }
+
+.fontSize08 {
+	font-size: .8em;
+}

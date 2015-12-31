@@ -1,0 +1,42 @@
+<ion-view ng-controller="CreateProfileCtrl" cache-view="false">
+
+	<ion-nav-title>
+		<h1 class="title light">Create profile</h1>
+	</ion-nav-title>	
+	<ion-nav-buttons side="right">
+	<!--top-bar-btn top-bar-right-->
+		<button class="button button-clear button-light icon-right" ng-click="nextPage()">Next</button>	   	
+	</ion-nav-buttons>
+
+
+<ion-content class="ion-content-block container-fluid" has-bouncing="false" scroll="false">
+
+<div class="page page-createprofile">
+
+	<div class="section profile-image-holder">
+		<div class="profile-image"></div>
+	</div>
+					
+	<div class="list">
+
+		<div class="item item-divider">
+			Fill out his personal info:
+		</div>
+
+		<label class="item item-input">
+			<input type="text" ng-model="newProfile.name" placeholder="Full Name *">
+		</label>		  
+		<label class="item item-input">
+			<input type="text" ng-model="newProfile.email" placeholder="Email *">
+		</label>
+
+	</div>
+
+	
+	<!--new button, just need to adjust royal color -->	
+	<button class="rw-button rw-button-purple rw-button-icon icon-right ion-chevron-right"  ng-click="nextPage()">Continue</button>
+	
+</div>
+
+</ion-content>
+</ion-view>
